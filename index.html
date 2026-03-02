@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Liga NBA 2K26</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#0f0f0f;
+    color:white;
+    text-align:center;
+}
+
+input,button,select{
+    padding:8px;
+    margin:5px;
+}
+
+button{
+    background:#007bff;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+table{
+    margin:auto;
+    margin-top:20px;
+    border-collapse:collapse;
+    width:70%;
+}
+
+th,td{
+    border:1px solid white;
+    padding:8px;
+}
+
+.card-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.card{
+    background:linear-gradient(135deg,#1c1c1c,#333);
+    border-radius:15px;
+    width:250px;
+    padding:20px;
+    margin:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.8);
+    text-align:left;
+}
+
+.card h3{
+    text-align:center;
+}
+
+.highlight{
+    color:#00ff99;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<h1>🏀 Liga NBA 2K26</h1>
+
+<h2>Agregar Jugador</h2>
+<input type="text" id="playerName" placeholder="Nombre jugador">
+<button onclick="addPlayer()">Agregar</button>
+
+<h2>Registrar Partido</h2>
+<select id="player1"></select>
+<input type="number" id="score1" placeholder="Pts">
+vs
+<select id="player2"></select>
+<input type="number" id="score2" placeholder="Pts">
+<button onclick="addMatch()">Guardar Partido</button>
+
+<h2>Tabla de Posiciones</h2>
+<table>
+<thead>
+<tr>
+<th>Jugador</th>
+<th>Victorias</th>
+<th>Derrotas</th>
+<th>Puntos</th>
+<th>% Victorias</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+
+<h2>Cartas de Jugadores</h2>
+<div class="card-container" id="cards"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, set, onValue } 
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB8oEVWDRvMF4J5CzCcs2-th4pa6za-hm8",
+    authDomain: "liga-nba2k26.firebaseapp.com",
+    databaseURL: "https://liga-nba2k26-default-rtdb.firebaseio.com",
+    projectId: "liga-nba2k26",
+    storageBucket: "liga-nba2k26.firebasestorage.app",
+    messagingSenderId: "277332835931",
+    appId: "1:277332835931:web:cdf080c6cc4fc312cc497e"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const playersRef = ref(database, "players");
+const matchesRef = ref(database, "matches");
+
+let players = [];
+let matches = [];
+
+// Escuchar jugadores
+onValue(playersRef, snapshot=>{
+    players = snapshot.val() ? Object.values(snapshot.val()) : [];
+    updateUI();
+});
+
+// Escuchar partidos
+onValue(matchesRef, snapshot=>{
+    matches = snapshot.val() ? Object.values(snapshot.val()) : [];
+    updateUI();
+});
+
+window.addPlayer = function(){
+    let name = document.getElementById("playerName").value.trim();
+    if(!name) return;
+
+    const newRef = push(playersRef);
+    set(newRef,{
+        name,
+        wins:0,
+        losses:0,
+        points:0
+    });
+
+    document.getElementById("playerName").value="";
+}
+
+window.addMatch = function(){
+    let p1 = document.getElementById("player1").value;
+    let p2 = document.getElementById("player2").value;
+    let s1 = parseInt(document.getElementById("score1").value);
+    let s2 = parseInt(document.getElementById("score2").value);
+
+    if(!p1 || !p2 || p1===p2 || isNaN(s1)||isNaN(s2)) return;
+
+    // Guardar partido
+    const matchRef = push(matchesRef);
+    set(matchRef,{p1,p2,s1,s2});
+
+    players.forEach(p=>{
+        if(p.name===p1){
+            if(s1>s2){ p.wins++; p.points+=3; }
+            else p.losses++;
+        }
+        if(p.name===p2){
+            if(s2>s1){ p.wins++; p.points+=3; }
+            else p.losses++;
+        }
+    });
+
+    set(playersRef,players);
+}
+
+function updateUI(){
+
+    let table=document.getElementById("tableBody");
+    let cards=document.getElementById("cards");
+    let select1=document.getElementById("player1");
+    let select2=document.getElementById("player2");
+
+    table.innerHTML="";
+    cards.innerHTML="";
+    select1.innerHTML="";
+    select2.innerHTML="";
+
+    players.sort((a,b)=>b.points-a.points);
+
+    players.forEach(p=>{
+
+        let total = p.wins + p.losses;
+        let winPercent = total>0 ? ((p.wins/total)*100).toFixed(1) : 0;
+
+        table.innerHTML+=`
+        <tr>
+        <td>${p.name}</td>
+        <td>${p.wins}</td>
+        <td>${p.losses}</td>
+        <td>${p.points}</td>
+        <td>${winPercent}%</td>
+        </tr>`;
+
+        select1.innerHTML+=`<option>${p.name}</option>`;
+        select2.innerHTML+=`<option>${p.name}</option>`;
+
+        // H2H Probabilidad promedio
+        let vsStats = {};
+        matches.forEach(m=>{
+            if(m.p1===p.name || m.p2===p.name){
+                let opponent = m.p1===p.name ? m.p2 : m.p1;
+                if(!vsStats[opponent]) vsStats[opponent]={wins:0,losses:0};
+
+                if(
+                   (m.p1===p.name && m.s1>m.s2) ||
+                   (m.p2===p.name && m.s2>m.s1)
+                ){
+                    vsStats[opponent].wins++;
+                }else{
+                    vsStats[opponent].losses++;
+                }
+            }
+        });
+
+        let vsHtml="";
+        for(let rival in vsStats){
+            let totalVs = vsStats[rival].wins + vsStats[rival].losses;
+            let prob = ((vsStats[rival].wins/totalVs)*100).toFixed(1);
+            vsHtml += `<div>Vs ${rival}: <span class="highlight">${prob}%</span></div>`;
+        }
+
+        cards.innerHTML+=`
+        <div class="card">
+            <h3>${p.name}</h3>
+            <div>Victorias: ${p.wins}</div>
+            <div>Derrotas: ${p.losses}</div>
+            <div>% Global: <span class="highlight">${winPercent}%</span></div>
+            <hr>
+            ${vsHtml || "Sin enfrentamientos"}
+        </div>`;
+    });
+}
+
+</script>
+
+</body>
+</html>
