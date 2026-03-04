@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Liga NBA 2K26</title>
+<title>Liga NBA 2K26 ELITE</title>
 
 <style>
 body{
     font-family: Arial;
-    background:#0f0f0f;
+    background:#0e0e0e;
     color:white;
     text-align:center;
 }
@@ -32,12 +32,16 @@ table{
     margin:auto;
     margin-top:20px;
     border-collapse:collapse;
-    width:70%;
+    width:85%;
 }
 
 th,td{
-    border:1px solid white;
+    border:1px solid #444;
     padding:8px;
+}
+
+th{
+    background:#1a1a1a;
 }
 
 .card-container{
@@ -48,31 +52,45 @@ th,td{
 }
 
 .card{
-    background:linear-gradient(135deg,#1c1c1c,#333);
+    background-size:cover;
+    background-position:center;
     border-radius:15px;
-    width:250px;
-    padding:20px;
+    width:270px;
+    height:440px;
+    padding:15px;
     margin:15px;
-    box-shadow:0 0 15px rgba(0,0,0,0.8);
-    text-align:left;
+    box-shadow:0 0 20px rgba(0,0,0,0.9);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
 }
 
-.card h3{
-    text-align:center;
+.card-overlay{
+    background:rgba(0,0,0,0.75);
+    padding:12px;
+    border-radius:10px;
 }
 
-.highlight{
-    color:#00ff99;
-    font-weight:bold;
+.green{ color:#00ff88; font-weight:bold;}
+.red{ color:#ff4d4d; font-weight:bold;}
+.yellow{ color:#ffd633; font-weight:bold;}
+
+.prediction{
+    margin-top:6px;
+    font-size:13px;
+    background:#111;
+    padding:6px;
+    border-radius:6px;
 }
 </style>
 </head>
 <body>
 
-<h1>🏀 Liga NBA 2K26</h1>
+<h1>🏀 Liga NBA 2K26 ELITE</h1>
 
 <h2>Agregar Jugador</h2>
 <input type="text" id="playerName" placeholder="Nombre jugador">
+<input type="text" id="playerImageUrl" placeholder="URL imagen (opcional)" style="width:300px;">
 <button onclick="addPlayer()">Agregar</button>
 
 <h2>Registrar Partido</h2>
@@ -81,23 +99,25 @@ th,td{
 vs
 <select id="player2"></select>
 <input type="number" id="score2" placeholder="Pts">
-<button onclick="addMatch()">Guardar Partido</button>
+<button onclick="addMatch()">Guardar</button>
 
-<h2>Tabla de Posiciones</h2>
+<h2>📊 Tabla de Posiciones</h2>
 <table>
 <thead>
 <tr>
+<th>#</th>
 <th>Jugador</th>
-<th>Victorias</th>
-<th>Derrotas</th>
+<th>W</th>
+<th>L</th>
 <th>Puntos</th>
-<th>% Victorias</th>
+<th>%</th>
+<th>Diff Total</th>
 </tr>
 </thead>
-<tbody id="tableBody"></tbody>
+<tbody id="standings"></tbody>
 </table>
 
-<h2>Cartas de Jugadores</h2>
+<h2> Jugadores </h2>
 <div class="card-container" id="cards"></div>
 
 <script type="module">
@@ -119,58 +139,53 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-const playersRef = ref(database, "players");
-const matchesRef = ref(database, "matches");
+const playersRef = ref(database,"players");
+const matchesRef = ref(database,"matches");
 
-let players = [];
-let matches = [];
+let players=[];
+let matches=[];
 
-// Escuchar jugadores
-onValue(playersRef, snapshot=>{
-    players = snapshot.val() ? Object.values(snapshot.val()) : [];
+onValue(playersRef,s=>{
+    players=s.val()?Object.values(s.val()):[];
     updateUI();
 });
 
-// Escuchar partidos
-onValue(matchesRef, snapshot=>{
-    matches = snapshot.val() ? Object.values(snapshot.val()) : [];
+onValue(matchesRef,s=>{
+    matches=s.val()?Object.values(s.val()):[];
     updateUI();
 });
 
-window.addPlayer = function(){
-    let name = document.getElementById("playerName").value.trim();
+window.addPlayer=function(){
+    let name=document.getElementById("playerName").value.trim();
+    let img=document.getElementById("playerImageUrl").value.trim();
     if(!name) return;
 
-    const newRef = push(playersRef);
-    set(newRef,{
-        name,
-        wins:0,
-        losses:0,
-        points:0
-    });
+    const newRef=push(playersRef);
+    set(newRef,{name,wins:0,losses:0,points:0,image:img});
 
     document.getElementById("playerName").value="";
+    document.getElementById("playerImageUrl").value="";
 }
 
-window.addMatch = function(){
-    let p1 = document.getElementById("player1").value;
-    let p2 = document.getElementById("player2").value;
-    let s1 = parseInt(document.getElementById("score1").value);
-    let s2 = parseInt(document.getElementById("score2").value);
+window.addMatch=function(){
 
-    if(!p1 || !p2 || p1===p2 || isNaN(s1)||isNaN(s2)) return;
+    let p1=document.getElementById("player1").value;
+    let p2=document.getElementById("player2").value;
+    let s1=parseInt(document.getElementById("score1").value);
+    let s2=parseInt(document.getElementById("score2").value);
 
-    // Guardar partido
-    const matchRef = push(matchesRef);
-    set(matchRef,{p1,p2,s1,s2});
+    if(!p1||!p2||p1===p2||isNaN(s1)||isNaN(s2)) return;
+
+    const newMatch=push(matchesRef);
+    set(newMatch,{p1,p2,s1,s2});
 
     players.forEach(p=>{
         if(p.name===p1){
-            if(s1>s2){ p.wins++; p.points+=3; }
+            if(s1>s2){p.wins++;p.points+=3;}
             else p.losses++;
         }
         if(p.name===p2){
-            if(s2>s1){ p.wins++; p.points+=3; }
+            if(s2>s1){p.wins++;p.points+=3;}
             else p.losses++;
         }
     });
@@ -180,73 +195,137 @@ window.addMatch = function(){
 
 function updateUI(){
 
-    let table=document.getElementById("tableBody");
     let cards=document.getElementById("cards");
+    let standings=document.getElementById("standings");
     let select1=document.getElementById("player1");
     let select2=document.getElementById("player2");
 
-    table.innerHTML="";
     cards.innerHTML="";
+    standings.innerHTML="";
     select1.innerHTML="";
     select2.innerHTML="";
 
-    players.sort((a,b)=>b.points-a.points);
-
     players.forEach(p=>{
-
-        let total = p.wins + p.losses;
-        let winPercent = total>0 ? ((p.wins/total)*100).toFixed(1) : 0;
-
-        table.innerHTML+=`
-        <tr>
-        <td>${p.name}</td>
-        <td>${p.wins}</td>
-        <td>${p.losses}</td>
-        <td>${p.points}</td>
-        <td>${winPercent}%</td>
-        </tr>`;
-
         select1.innerHTML+=`<option>${p.name}</option>`;
         select2.innerHTML+=`<option>${p.name}</option>`;
+    });
 
-        // H2H Probabilidad promedio
-        let vsStats = {};
+    // Calcular diff total
+    players.forEach(p=>{
+        p.totalDiff=0;
         matches.forEach(m=>{
-            if(m.p1===p.name || m.p2===p.name){
-                let opponent = m.p1===p.name ? m.p2 : m.p1;
-                if(!vsStats[opponent]) vsStats[opponent]={wins:0,losses:0};
+            if(m.p1===p.name){
+                p.totalDiff += m.s1-m.s2;
+            }
+            if(m.p2===p.name){
+                p.totalDiff += m.s2-m.s1;
+            }
+        });
+    });
 
-                if(
-                   (m.p1===p.name && m.s1>m.s2) ||
-                   (m.p2===p.name && m.s2>m.s1)
-                ){
-                    vsStats[opponent].wins++;
+    // Ordenar ranking
+    players.sort((a,b)=>{
+        if(b.points!==a.points) return b.points-a.points;
+        let aPct=a.wins/(a.wins+a.losses||1);
+        let bPct=b.wins/(b.wins+b.losses||1);
+        if(bPct!==aPct) return bPct-aPct;
+        return b.totalDiff-a.totalDiff;
+    });
+
+    // Tabla posiciones
+    players.forEach((p,index)=>{
+
+        let total=p.wins+p.losses;
+        let pct= total>0 ? ((p.wins/total)*100).toFixed(1) : 0;
+
+        let icon="⚔️";
+        if(index===0) icon="🥇";
+        else if(index===1) icon="🥈";
+        else if(index===2) icon="🥉";
+        else if(index===players.length-1) icon="📉";
+        else if(index<4) icon="🔥";
+
+        standings.innerHTML+=`
+        <tr>
+            <td>${icon} ${index+1}</td>
+            <td>${p.name}</td>
+            <td>${p.wins}</td>
+            <td>${p.losses}</td>
+            <td>${p.points}</td>
+            <td>${pct}%</td>
+            <td>${p.totalDiff}</td>
+        </tr>`;
+    });
+
+    // Cartas (se mantienen igual)
+    players.forEach(p=>{
+
+        let total=p.wins+p.losses;
+        let winPercent= total>0 ? (p.wins/total) : 0;
+
+        let vsStats={};
+
+        matches.forEach(m=>{
+            if(m.p1===p.name||m.p2===p.name){
+                let rival=m.p1===p.name?m.p2:m.p1;
+                if(!vsStats[rival]) vsStats[rival]={wins:0,losses:0,pointDiff:0};
+
+                let isWin=(m.p1===p.name&&m.s1>m.s2)||(m.p2===p.name&&m.s2>m.s1);
+
+                if(isWin){
+                    vsStats[rival].wins++;
+                    vsStats[rival].pointDiff+=Math.abs(m.s1-m.s2);
                 }else{
-                    vsStats[opponent].losses++;
+                    vsStats[rival].losses++;
+                    vsStats[rival].pointDiff-=Math.abs(m.s1-m.s2);
                 }
             }
         });
 
         let vsHtml="";
+
         for(let rival in vsStats){
-            let totalVs = vsStats[rival].wins + vsStats[rival].losses;
-            let prob = ((vsStats[rival].wins/totalVs)*100).toFixed(1);
-            vsHtml += `<div>Vs ${rival}: <span class="highlight">${prob}%</span></div>`;
+
+            let wins=vsStats[rival].wins;
+            let losses=vsStats[rival].losses;
+            let diff=vsStats[rival].pointDiff;
+            let totalVs=wins+losses;
+            let h2h= totalVs>0 ? (wins/totalVs) : 0;
+
+            let prediction=((winPercent*0.5)+(h2h*0.5))*100;
+            prediction=prediction.toFixed(1);
+
+            let color="yellow";
+            if(wins>losses) color="green";
+            else if(wins<losses) color="red";
+
+            vsHtml+=`
+            <div>
+                Vs ${rival}: 
+                <span class="${color}">${wins} - ${losses}</span>
+                (Diff: ${diff})
+                <div class="prediction">
+                    Probabilidad estimada: ${prediction}%
+                </div>
+            </div>`;
         }
 
+        let bg=p.image?p.image:"https://via.placeholder.com/300x400";
+
         cards.innerHTML+=`
-        <div class="card">
-            <h3>${p.name}</h3>
-            <div>Victorias: ${p.wins}</div>
-            <div>Derrotas: ${p.losses}</div>
-            <div>% Global: <span class="highlight">${winPercent}%</span></div>
-            <hr>
-            ${vsHtml || "Sin enfrentamientos"}
+        <div class="card" style="background-image:url('${bg}')">
+            <div class="card-overlay">
+                <h3>${p.name}</h3>
+                <div>Victorias: ${p.wins}</div>
+                <div>Derrotas: ${p.losses}</div>
+                <div>% Global: ${(winPercent*100).toFixed(1)}%</div>
+                <hr>
+                ${vsHtml||"Sin enfrentamientos"}
+            </div>
         </div>`;
     });
 }
 
 </script>
-
 </body>
 </html>
