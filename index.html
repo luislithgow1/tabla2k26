@@ -123,7 +123,7 @@ vs
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue } 
+import { getDatabase, ref, push, set, onValue, update } 
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -142,113 +142,196 @@ const database = getDatabase(app);
 const playersRef = ref(database,"players");
 const matchesRef = ref(database,"matches");
 
-let players=[];
-let matches=[];
+let players = [];
+let matches = [];
 
-onValue(playersRef,s=>{
-    players=s.val()?Object.values(s.val()):[];
+onValue(playersRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        // Convertir objeto a array manteniendo los ids para futuras actualizaciones
+        players = Object.entries(data).map(([id, p]) => ({ id, ...p }));
+    } else {
+        players = [];
+    }
+    recomputeAllStats(); // Recalcular wins/losses y diff desde partidos
     updateUI();
 });
 
-onValue(matchesRef,s=>{
-    matches=s.val()?Object.values(s.val()):[];
+onValue(matchesRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        matches = Object.entries(data).map(([id, m]) => ({ id, ...m }));
+    } else {
+        matches = [];
+    }
+    recomputeAllStats(); // Cada vez que cambian partidos, recalculamos estadísticas puras
     updateUI();
 });
 
-window.addPlayer=function(){
-    let name=document.getElementById("playerName").value.trim();
-    let img=document.getElementById("playerImageUrl").value.trim();
-    if(!name) return;
-
-    const newRef=push(playersRef);
-    set(newRef,{name,wins:0,losses:0,points:0,image:img});
-
-    document.getElementById("playerName").value="";
-    document.getElementById("playerImageUrl").value="";
-}
-
-window.addMatch=function(){
-
-    let p1=document.getElementById("player1").value;
-    let p2=document.getElementById("player2").value;
-    let s1=parseInt(document.getElementById("score1").value);
-    let s2=parseInt(document.getElementById("score2").value);
-
-    if(!p1||!p2||p1===p2||isNaN(s1)||isNaN(s2)) return;
-
-    const newMatch=push(matchesRef);
-    set(newMatch,{p1,p2,s1,s2});
-
-    players.forEach(p=>{
-        if(p.name===p1){
-            if(s1>s2){p.wins++;p.points+=3;}
-            else p.losses++;
-        }
-        if(p.name===p2){
-            if(s2>s1){p.wins++;p.points+=3;}
-            else p.losses++;
-        }
+// Función que recalcula wins, losses, points (3 por win) y totalDiff basándose SOLO en los partidos
+function recomputeAllStats() {
+    // Resetear estadísticas de cada jugador
+    players.forEach(p => {
+        p.wins = 0;
+        p.losses = 0;
+        p.points = 0;
+        p.totalDiff = 0;
     });
 
-    set(playersRef,players);
+    // Procesar cada partido
+    matches.forEach(m => {
+        const p1 = players.find(p => p.name === m.p1);
+        const p2 = players.find(p => p.name === m.p2);
+        if (!p1 || !p2) return;
+        
+        const s1 = Number(m.s1);
+        const s2 = Number(m.s2);
+        if (isNaN(s1) || isNaN(s2)) return;
+        
+        // Diferencia de puntos
+        p1.totalDiff += (s1 - s2);
+        p2.totalDiff += (s2 - s1);
+        
+        if (s1 > s2) {
+            p1.wins++;
+            p1.points += 3;
+            p2.losses++;
+        } else if (s2 > s1) {
+            p2.wins++;
+            p2.points += 3;
+            p1.losses++;
+        }
+    });
+    
+    // Sincronizar los datos actualizados con Firebase (para persistencia de wins/losses/points/diff)
+    // pero sin crear bucles infinitos. Actualizamos solo los campos derivados.
+    const updates = {};
+    players.forEach(p => {
+        updates[`players/${p.id}/wins`] = p.wins;
+        updates[`players/${p.id}/losses`] = p.losses;
+        updates[`players/${p.id}/points`] = p.points;
+        // No guardamos totalDiff en la DB porque se recalcula siempre, pero por consistencia podemos guardarlo (opcional)
+        updates[`players/${p.id}/totalDiff`] = p.totalDiff;
+    });
+    if (Object.keys(updates).length > 0) {
+        update(ref(database), updates).catch(err => console.warn("Error al sincronizar stats:", err));
+    }
 }
 
-function updateUI(){
+window.addPlayer = function() {
+    let name = document.getElementById("playerName").value.trim();
+    let img = document.getElementById("playerImageUrl").value.trim();
+    if (!name) return;
 
-    let cards=document.getElementById("cards");
-    let standings=document.getElementById("standings");
-    let select1=document.getElementById("player1");
-    let select2=document.getElementById("player2");
-
-    cards.innerHTML="";
-    standings.innerHTML="";
-    select1.innerHTML="";
-    select2.innerHTML="";
-
-    players.forEach(p=>{
-        select1.innerHTML+=`<option>${p.name}</option>`;
-        select2.innerHTML+=`<option>${p.name}</option>`;
+    const newRef = push(playersRef);
+    set(newRef, { 
+        name, 
+        wins: 0, 
+        losses: 0, 
+        points: 0, 
+        totalDiff: 0,
+        image: img 
     });
 
-    // Calcular diff total
-    players.forEach(p=>{
-        p.totalDiff=0;
-        matches.forEach(m=>{
-            if(m.p1===p.name){
-                p.totalDiff += m.s1-m.s2;
+    document.getElementById("playerName").value = "";
+    document.getElementById("playerImageUrl").value = "";
+}
+
+window.addMatch = function() {
+    let p1Name = document.getElementById("player1").value;
+    let p2Name = document.getElementById("player2").value;
+    let s1 = parseInt(document.getElementById("score1").value);
+    let s2 = parseInt(document.getElementById("score2").value);
+
+    if (!p1Name || !p2Name || p1Name === p2Name || isNaN(s1) || isNaN(s2)) {
+        alert("Selecciona dos jugadores distintos y puntuaciones válidas.");
+        return;
+    }
+    
+    // Verificar que ambos nombres existan en players actuales
+    const p1Exists = players.some(p => p.name === p1Name);
+    const p2Exists = players.some(p => p.name === p2Name);
+    if (!p1Exists || !p2Exists) {
+        alert("Uno de los jugadores no existe en la base.");
+        return;
+    }
+
+    const newMatchRef = push(matchesRef);
+    set(newMatchRef, { p1: p1Name, p2: p2Name, s1: s1, s2: s2 });
+    
+    // Limpiar inputs para comodidad
+    document.getElementById("score1").value = "";
+    document.getElementById("score2").value = "";
+}
+
+function updateUI() {
+    let cards = document.getElementById("cards");
+    let standings = document.getElementById("standings");
+    let select1 = document.getElementById("player1");
+    let select2 = document.getElementById("player2");
+
+    cards.innerHTML = "";
+    standings.innerHTML = "";
+    select1.innerHTML = "";
+    select2.innerHTML = "";
+
+    // Llenar selects con todos los jugadores (orden alfabético para consistencia)
+    const sortedForSelect = [...players].sort((a,b) => a.name.localeCompare(b.name));
+    sortedForSelect.forEach(p => {
+        select1.innerHTML += `<option>${escapeHtml(p.name)}</option>`;
+        select2.innerHTML += `<option>${escapeHtml(p.name)}</option>`;
+    });
+    
+    // IMPORTANTE: Calcular nuevamente diff total por si acaso (recomputeAllStats ya actualizó p.totalDiff)
+    // Aseguramos que cada jugador tenga totalDiff actualizado con los partidos más recientes.
+    // Ya lo hizo recomputeAllStats, pero recalc extra.
+    players.forEach(p => {
+        let diff = 0;
+        matches.forEach(m => {
+            if (m.p1 === p.name) {
+                diff += (Number(m.s1) - Number(m.s2));
             }
-            if(m.p2===p.name){
-                p.totalDiff += m.s2-m.s1;
+            if (m.p2 === p.name) {
+                diff += (Number(m.s2) - Number(m.s1));
             }
         });
+        p.totalDiff = diff;
     });
-
-    // Ordenar ranking
-    players.sort((a,b)=>{
-        if(b.points!==a.points) return b.points-a.points;
-        let aPct=a.wins/(a.wins+a.losses||1);
-        let bPct=b.wins/(b.wins+b.losses||1);
-        if(bPct!==aPct) return bPct-aPct;
-        return b.totalDiff-a.totalDiff;
+    
+    // --- NUEVO CRITERIO DE ORDENAMIENTO: solo porcentaje de victorias y luego Diff Total ---
+    // Ordenar basado EN PORCENTAJE (Win%) descendente, y como segundo criterio Diff Total descendente.
+    // Los puntos tradicionales (3 por win) ya no afectan el orden, pero se siguen mostrando por estética.
+    players.sort((a, b) => {
+        // Calcular porcentaje de victorias (evitar división por cero)
+        let totalA = a.wins + a.losses;
+        let totalB = b.wins + b.losses;
+        let pctA = totalA === 0 ? 0 : a.wins / totalA;
+        let pctB = totalB === 0 ? 0 : b.wins / totalB;
+        
+        // Primera prioridad: mayor porcentaje
+        if (Math.abs(pctA - pctB) > 0.0001) {
+            return pctB - pctA;
+        }
+        // Segunda prioridad: mayor diferencia de puntos total
+        return b.totalDiff - a.totalDiff;
     });
-
-    // Tabla posiciones
-    players.forEach((p,index)=>{
-
-        let total=p.wins+p.losses;
-        let pct= total>0 ? ((p.wins/total)*100).toFixed(1) : 0;
-
-        let icon="⚔️";
-        if(index===0) icon="🥇";
-        else if(index===1) icon="🥈";
-        else if(index===2) icon="🥉";
-        else if(index===players.length-1) icon="📉";
-        else if(index<4) icon="🔥";
-
-        standings.innerHTML+=`
+    
+    // Mostrar tabla de posiciones
+    players.forEach((p, index) => {
+        let total = p.wins + p.losses;
+        let pct = total > 0 ? ((p.wins / total) * 100).toFixed(1) : 0;
+        
+        let icon = "⚔️";
+        if (index === 0) icon = "🥇";
+        else if (index === 1) icon = "🥈";
+        else if (index === 2) icon = "🥉";
+        else if (index === players.length - 1 && players.length > 1) icon = "📉";
+        else if (index < 4) icon = "🔥";
+        
+        standings.innerHTML += `
         <tr>
             <td>${icon} ${index+1}</td>
-            <td>${p.name}</td>
+            <td>${escapeHtml(p.name)}</td>
             <td>${p.wins}</td>
             <td>${p.losses}</td>
             <td>${p.points}</td>
@@ -256,52 +339,52 @@ function updateUI(){
             <td>${p.totalDiff}</td>
         </tr>`;
     });
-
-    // Cartas (se mantienen igual)
-    players.forEach(p=>{
-
-        let total=p.wins+p.losses;
-        let winPercent= total>0 ? (p.wins/total) : 0;
-
-        let vsStats={};
-
-        matches.forEach(m=>{
-            if(m.p1===p.name||m.p2===p.name){
-                let rival=m.p1===p.name?m.p2:m.p1;
-                if(!vsStats[rival]) vsStats[rival]={wins:0,losses:0,pointDiff:0};
-
-                let isWin=(m.p1===p.name&&m.s1>m.s2)||(m.p2===p.name&&m.s2>m.s1);
-
-                if(isWin){
+    
+    // Generar cartas con predicciones y vs stats (como antes, pero reflejando estadísticas reales)
+    players.forEach(p => {
+        let total = p.wins + p.losses;
+        let winPercent = total > 0 ? (p.wins / total) : 0;
+        
+        let vsStats = {};
+        
+        matches.forEach(m => {
+            if (m.p1 === p.name || m.p2 === p.name) {
+                let rival = m.p1 === p.name ? m.p2 : m.p1;
+                if (!vsStats[rival]) vsStats[rival] = { wins: 0, losses: 0, pointDiff: 0, totalGames: 0 };
+                
+                let isWin = (m.p1 === p.name && Number(m.s1) > Number(m.s2)) || 
+                            (m.p2 === p.name && Number(m.s2) > Number(m.s1));
+                let diffPoints = Math.abs(Number(m.s1) - Number(m.s2));
+                if (isWin) {
                     vsStats[rival].wins++;
-                    vsStats[rival].pointDiff+=Math.abs(m.s1-m.s2);
-                }else{
+                    vsStats[rival].pointDiff += diffPoints;
+                } else {
                     vsStats[rival].losses++;
-                    vsStats[rival].pointDiff-=Math.abs(m.s1-m.s2);
+                    vsStats[rival].pointDiff -= diffPoints;
                 }
+                vsStats[rival].totalGames++;
             }
         });
-
-        let vsHtml="";
-
-        for(let rival in vsStats){
-
-            let wins=vsStats[rival].wins;
-            let losses=vsStats[rival].losses;
-            let diff=vsStats[rival].pointDiff;
-            let totalVs=wins+losses;
-            let h2h= totalVs>0 ? (wins/totalVs) : 0;
-
-            let prediction=((winPercent*0.5)+(h2h*0.5))*100;
-            prediction=prediction.toFixed(1);
-
-            let color="yellow";
-            if(wins>losses) color="green";
-            else if(wins<losses) color="red";
-
-            vsHtml+=`
+        
+        let vsHtml = "";
+        for (let rival in vsStats) {
+            let wins = vsStats[rival].wins;
+            let losses = vsStats[rival].losses;
+            let diff = vsStats[rival].pointDiff;
+            let totalVs = wins + losses;
+            let h2h = totalVs > 0 ? (wins / totalVs) : 0;
+            
+            // Predicción combinada: 50% rendimiento global + 50% rendimiento vs ese rival
+            let prediction = ((winPercent * 0.5) + (h2h * 0.5)) * 100;
+            prediction = prediction.toFixed(1);
+            
+            let color = "yellow";
+            if (wins > losses) color = "green";
+            else if (wins < losses) color = "red";
+            
+            vsHtml += `
             <div>
-                Vs ${rival}: 
+                Vs ${escapeHtml(rival)}: 
                 <span class="${color}">${wins} - ${losses}</span>
                 (Diff: ${diff})
                 <div class="prediction">
@@ -309,22 +392,43 @@ function updateUI(){
                 </div>
             </div>`;
         }
-
-        let bg=p.image?p.image:"https://via.placeholder.com/300x400";
-
-        cards.innerHTML+=`
+        
+        let bg = p.image && p.image.trim() !== "" ? p.image : "https://via.placeholder.com/300x400?text=Sin+Imagen";
+        
+        cards.innerHTML += `
         <div class="card" style="background-image:url('${bg}')">
             <div class="card-overlay">
-                <h3>${p.name}</h3>
+                <h3>${escapeHtml(p.name)}</h3>
                 <div>Victorias: ${p.wins}</div>
                 <div>Derrotas: ${p.losses}</div>
-                <div>% Global: ${(winPercent*100).toFixed(1)}%</div>
+                <div>% Global: ${(winPercent * 100).toFixed(1)}%</div>
+                <div>Dif. Total: ${p.totalDiff}</div>
                 <hr>
-                ${vsHtml||"Sin enfrentamientos"}
+                ${vsHtml || "Sin enfrentamientos aún"}
             </div>
         </div>`;
     });
 }
+
+// Función simple para escapar HTML y evitar inyecciones
+function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+        return c;
+    });
+}
+
+// Inicializar una vez que se cargue todo correctamente
+setTimeout(() => {
+    // Forzar recompute inicial
+    recomputeAllStats();
+    updateUI();
+}, 100);
 
 </script>
 </body>
