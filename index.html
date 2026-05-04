@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liga NBA 2K26 ELITE - Sistema de Códigos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Liga NBA 2K26 ELITE - Estadísticas Avanzadas</title>
 
 <style>
 /* ============ ESTILOS MODERNOS ============ */
@@ -22,7 +22,7 @@ body {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1800px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -75,68 +75,229 @@ button:active {
     transform: translateY(0);
 }
 
-table {
-    margin: 20px auto;
-    border-collapse: collapse;
-    width: 100%;
-    background: rgba(26,26,46,0.9);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
-
-th, td {
-    border: 1px solid #444;
-    padding: 12px;
-    text-align: center;
-}
-
-th {
-    background: #1a1a2e;
-    color: #ffd633;
-    font-weight: bold;
-}
-
-tr:hover {
-    background: rgba(0,123,255,0.1);
-}
-
 .card-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 30px;
+    gap: 25px;
+    margin: 30px auto;
+    padding: 10px;
 }
 
 .card {
+    border-radius: 20px;
+    width: 380px;
+    min-width: 340px;
+    max-width: 400px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     background-size: cover;
     background-position: center;
-    border-radius: 15px;
-    width: 280px;
-    height: 450px;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    background-repeat: no-repeat;
+    min-height: 550px;
 }
 
 .card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,123,255,0.3);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0,123,255,0.4);
 }
 
+/* Overlay oscuro para que el texto sea legible */
 .card-overlay {
-    background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.6));
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%);
     padding: 15px;
-    border-radius: 15px;
-    height: 100%;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    height: 100%;
+    min-height: 550px;
+    backdrop-filter: blur(1px);
 }
 
-.green { color: #00ff88; font-weight: bold; }
-.red { color: #ff4d4d; font-weight: bold; }
-.yellow { color: #ffd633; font-weight: bold; }
+.card h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: #ffd633;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* Grid de estadísticas principales */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.stat-cell {
+    text-align: center;
+    padding: 5px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 8px;
+}
+
+.stat-label-small {
+    font-size: 10px;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value-medium {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.wins { color: #00ff88; }
+.losses { color: #ff4d4d; }
+.points { color: #ffd633; }
+.percentage { color: #17a2b8; }
+.streak { color: #ff9f00; }
+.diff { color: #c792ea; }
+
+/* Sección VS RIVALES */
+.vs-section {
+    margin-top: 8px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.vs-title {
+    background: rgba(255,215,0,0.2);
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffd633;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,215,0,0.3);
+}
+
+.vs-container {
+    max-height: 210px;
+    overflow-y: auto;
+    padding: 5px 8px;
+}
+
+.vs-container::-webkit-scrollbar {
+    width: 4px;
+}
+.vs-container::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}
+.vs-container::-webkit-scrollbar-thumb {
+    background: #ffd633;
+    border-radius: 4px;
+}
+
+.vs-header-row {
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 0.7fr 0.8fr;
+    padding: 5px 8px;
+    font-size: 10px;
+    color: #ffd633;
+    border-bottom: 1px solid rgba(255,215,0,0.2);
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.vs-row {
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 0.7fr 0.8fr;
+    padding: 6px 8px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: center;
+}
+
+.vs-opponent {
+    font-weight: bold;
+    color: #ffd633;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.vs-record {
+    text-align: center;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.vs-prob {
+    text-align: right;
+    font-weight: bold;
+}
+
+.vs-diff {
+    text-align: right;
+    font-weight: bold;
+}
+
+.prob-high { color: #00ff88; }
+.prob-mid { color: #ffd633; }
+.prob-low { color: #ff6b6b; }
+
+.empty-vs {
+    text-align: center;
+    color: #aaa;
+    padding: 20px;
+    font-size: 12px;
+}
+
+.total-row {
+    background: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-label {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.total-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd633;
+}
+
+.rank-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    backdrop-filter: blur(4px);
+    z-index: 15;
+    border: 1px solid rgba(255,215,0,0.5);
+}
+
+.rank-1 { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; border: none; }
+.rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #000; border: none; }
+.rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #000; border: none; }
+
+.green { color: #00ff88; }
+.red { color: #ff4d4d; }
+.yellow { color: #ffd633; }
 
 .auth-section, .match-section, .login-section {
     background: rgba(26,26,46,0.95);
@@ -154,7 +315,7 @@ tr:hover {
     padding: 20px;
     border-radius: 15px;
     margin: 15px auto;
-    max-width: 550px;
+    max-width: 650px;
     border: 1px solid #ffd633;
 }
 
@@ -188,7 +349,7 @@ tr:hover {
     background: #bb2d3b;
 }
 
-.pending-user, .user-item {
+.pending-user, .user-item, .pending-code-item {
     background: #333;
     padding: 12px;
     margin: 8px;
@@ -200,15 +361,11 @@ tr:hover {
     gap: 10px;
 }
 
-.approve-btn {
-    background: #28a745;
-}
+.approve-btn { background: #28a745; }
+.reject-btn, .delete-user-btn, .delete-code-btn { background: #dc3545; }
+.delete-code-btn { background: #ff4444; font-size: 12px; padding: 5px 12px; }
 
-.reject-btn, .delete-user-btn {
-    background: #dc3545;
-}
-
-.user-list {
+.user-list, .codes-list {
     max-height: 300px;
     overflow-y: auto;
 }
@@ -223,12 +380,10 @@ tr:hover {
     z-index: 1000;
     animation: slideIn 0.3s ease;
 }
-
 @keyframes slideIn {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
-
 .toast.success { background: #28a745; }
 .toast.error { background: #dc3545; }
 .toast.info { background: #17a2b8; }
@@ -241,7 +396,6 @@ tr:hover {
     margin: 15px 0;
     border: 2px solid #ffd633;
 }
-
 .code-number {
     font-size: 48px;
     letter-spacing: 15px;
@@ -249,13 +403,11 @@ tr:hover {
     font-weight: bold;
     color: #00ff88;
 }
-
 .pending-matches {
     max-height: 300px;
     overflow-y: auto;
     margin-top: 15px;
 }
-
 .pending-match {
     background: #2a2a3e;
     padding: 12px;
@@ -268,7 +420,6 @@ tr:hover {
     gap: 10px;
     border-left: 4px solid #ffd633;
 }
-
 .info-box {
     background: #1a2a3a;
     padding: 12px;
@@ -277,26 +428,24 @@ tr:hover {
     text-align: left;
     border-left: 4px solid #007bff;
 }
+.info-box h4 { color: #ffd633; margin-bottom: 8px; }
 
-.info-box h4 {
-    color: #ffd633;
-    margin-bottom: 8px;
+@media (max-width: 900px) {
+    .card-container { gap: 15px; }
+    .card { width: 100%; max-width: 380px; }
+    .stats-grid { gap: 5px; padding: 8px; }
+    .vs-header-row, .vs-row { grid-template-columns: 1fr 0.6fr 0.6fr 0.7fr; font-size: 10px; }
+    .vs-container { max-height: 180px; }
 }
 
-@media (max-width: 768px) {
-    .card { width: 100%; }
-    table { font-size: 12px; }
-    th, td { padding: 8px 4px; }
-    .user-info { flex-direction: column; }
-    .pending-user { flex-direction: column; text-align: center; }
-    .code-number { font-size: 28px; letter-spacing: 8px; }
+@media (max-width: 480px) {
+    .card { min-width: 300px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid .stat-cell:last-child { grid-column: span 2; }
+    .vs-header-row, .vs-row { font-size: 9px; }
 }
 
-hr {
-    margin: 15px 0;
-    border-color: #444;
-}
-
+hr { margin: 15px 0; border-color: #444; }
 .badge {
     display: inline-block;
     padding: 3px 8px;
@@ -304,30 +453,24 @@ hr {
     font-size: 11px;
     font-weight: bold;
 }
-
-.badge-warning {
-    background: #ffc107;
-    color: #000;
-}
-
-.badge-success {
-    background: #28a745;
-    color: #fff;
-}
-
-.badge-info {
-    background: #17a2b8;
-    color: #fff;
-}
-
+.badge-warning { background: #ffc107; color: #000; }
+.badge-success { background: #28a745; color: #fff; }
+.badge-info { background: #17a2b8; color: #fff; }
 @keyframes glow {
     0% { box-shadow: 0 0 5px #ffd633; }
     50% { box-shadow: 0 0 20px #ffd633; }
     100% { box-shadow: 0 0 5px #ffd633; }
 }
-
-.new-code {
-    animation: glow 1s ease-in-out 3;
+.new-code { animation: glow 1s ease-in-out 3; }
+.players-title {
+    font-size: 2rem;
+    margin: 40px 0 20px;
+    background: linear-gradient(135deg, #ffd633, #ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    padding: 0 20px;
 }
 </style>
 </head>
@@ -335,7 +478,6 @@ hr {
 <div class="container">
     <h1>🏀 Liga NBA 2K26 ELITE</h1>
 
-    <!-- Sección de LOGIN -->
     <div class="login-section" id="loginSection">
         <h3>🔐 Iniciar Sesión</h3>
         <div style="background: #0a2a0a; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
@@ -348,19 +490,17 @@ hr {
         <div id="loginMessage"></div>
     </div>
 
-    <!-- Sección de REGISTRO -->
     <div class="login-section" id="registerSection" style="display:none;">
         <h3>📝 Registro de Usuario</h3>
         <input type="text" id="regUsername" placeholder="Nombre de usuario" style="width: 90%;">
-        <input type="password" id="regPassword" placeholder="Contraseña (mínimo 4 caracteres)" style="width: 90%;">
-        <input type="password" id="regConfirmPassword" placeholder="Confirmar contraseña" style="width: 90%;">
+        <input type="password" id="regPassword" placeholder="Contraseña (mínimo 4)" style="width: 90%;">
+        <input type="password" id="regConfirmPassword" placeholder="Confirmar" style="width: 90%;">
         <button id="registerBtn" style="background:#28a745;">✅ Registrarse</button>
         <button id="backToLoginBtn" style="background:#555;">◀️ Volver</button>
         <div id="registerMessage"></div>
-        <p style="font-size:12px; color:#aaa; margin-top:10px;">⚠️ Los registros requieren aprobación del administrador</p>
+        <p style="font-size:12px; color:#aaa; margin-top:10px;">⚠️ Requiere aprobación del admin</p>
     </div>
 
-    <!-- Panel Principal -->
     <div id="userPanel" style="display:none;">
         <div class="user-info">
             👤 <span id="currentUserSpan"></span>
@@ -368,7 +508,6 @@ hr {
             <button id="logoutBtn" class="logout-btn">🚪 Cerrar Sesión</button>
         </div>
 
-        <!-- Panel de Administración -->
         <div id="adminPanel" style="display:none;" class="auth-section">
             <h3>👑 Panel de Administración</h3>
             <div class="pending-section">
@@ -380,85 +519,64 @@ hr {
                 <h4>👥 Usuarios Aprobados</h4>
                 <div id="usersList" class="user-list"></div>
             </div>
+            <div class="pending-section">
+                <h4>⏳ Códigos Activos (Admin puede eliminar)</h4>
+                <div id="adminCodesList" class="codes-list"></div>
+                <button id="refreshCodesBtn" style="background:#17a2b8; margin-top:10px;">🔄 Refrescar Códigos</button>
+            </div>
         </div>
 
-        <!-- INSTRUCCIONES DEL SISTEMA -->
         <div class="info-box" style="max-width: 650px; margin: 0 auto 20px auto;">
             <h4>📖 ¿Cómo funciona?</h4>
-            <p>🔴 <strong>El PERDEDOR</strong> debe generar el código y enviárselo al GANADOR</p>
-            <p>🟢 <strong>El GANADOR</strong> debe usar ese código para registrar su victoria</p>
-            <p>⏰ Los códigos expiran en <strong>10 minutos</strong></p>
-            <p>⚠️ <strong>Importante:</strong> Selecciona al ganador EXACTAMENTE como aparece en la lista de jugadores</p>
+            <p>🔴 <strong>El PERDEDOR</strong> genera el código y se lo envía al GANADOR</p>
+            <p>🟢 <strong>El GANADOR</strong> usa el código para registrar su victoria</p>
+            <p>⏰ Los códigos expiran automáticamente después de <strong>5 MINUTOS</strong> si no se usan</p>
+            <p>👑 El administrador puede eliminar códigos activos manualmente</p>
         </div>
 
-        <!-- SECCIÓN PARA EL PERDEDOR: Generar código -->
         <div class="auth-section" id="generatorSection">
-            <h3>🔴 SI PERDISTE - Genera el código para el ganador</h3>
-            <p>Completa los datos del partido que PERDISTE y envía el código al ganador</p>
-            <div style="background: #2a1a1a; padding: 15px; border-radius: 10px; margin: 10px 0;">
+            <h3>🔴 SI PERDISTE - Genera código</h3>
+            <div style="background: #2a1a1a; padding: 15px; border-radius: 10px;">
                 <label>🏆 ¿Quién GANÓ?</label>
-                <select id="loserPlayer" style="width: 100%; margin: 5px 0;">
-                    <option value="">Selecciona al GANADOR</option>
-                </select>
+                <select id="loserPlayer" style="width: 100%;"></select>
                 <label>📊 Tu puntaje (PERDEDOR)</label>
-                <input type="number" id="loserScore" placeholder="Tu puntaje" style="width: 100%; margin: 5px 0;">
+                <input type="number" id="loserScore" placeholder="Tu puntaje" style="width: 100%;">
                 <label>📊 Puntaje del GANADOR</label>
-                <input type="number" id="winnerScore" placeholder="Puntaje del ganador" style="width: 100%; margin: 5px 0;">
-                <button id="generateLoserCodeBtn" style="background:#dc3545; width: 100%; margin-top: 10px;">🎲 Generar Código para el Ganador</button>
+                <input type="number" id="winnerScore" placeholder="Puntaje del ganador" style="width: 100%;">
+                <button id="generateLoserCodeBtn" style="background:#dc3545; width: 100%; margin-top: 10px;">🎲 Generar Código</button>
             </div>
             <div id="generatedCodeDisplay"></div>
-            <div id="generatorMessage"></div>
         </div>
 
-        <!-- SECCIÓN PARA EL GANADOR: Registrar con código -->
         <div class="match-section" id="winnerSection">
-            <h3>🟢 SI GANASTE - Registra tu victoria</h3>
-            <p>Ingresa el código que te dio el perdedor para registrar el resultado</p>
-            <div style="background: #1a2a1a; padding: 15px; border-radius: 10px; margin: 10px 0;">
+            <h3>🟢 SI GANASTE - Registra victoria</h3>
+            <div style="background: #1a2a1a; padding: 15px; border-radius: 10px;">
                 <label>🔑 Código del perdedor</label>
-                <input type="text" id="winnerCodeInput" placeholder="Ej: 123456" style="width: 100%; font-size: 18px; text-align: center; letter-spacing: 3px; margin: 5px 0;">
-                <button id="registerWinBtn" style="background:#28a745; width: 100%; margin-top: 10px;">🏆 Registrar Mi Victoria</button>
+                <input type="text" id="winnerCodeInput" placeholder="Ej: 123456" style="width: 100%; font-size: 18px; text-align: center;">
+                <button id="registerWinBtn" style="background:#28a745; width: 100%; margin-top: 10px;">🏆 Registrar Victoria</button>
             </div>
-            <div id="winnerMessage"></div>
         </div>
 
-        <!-- PARTIDOS PENDIENTES POR REGISTRAR -->
         <div class="auth-section" id="pendingMatchesSection">
-            <h3>⏳ Códigos Activos (Pendientes)</h3>
-            <p>Códigos generados que aún no han sido usados</p>
+            <h3>⏳ Códigos Activos (expiran en 5 min)</h3>
             <div id="pendingMatchesList" class="pending-matches"></div>
         </div>
 
         <hr>
-
         <h2>➕ Agregar Jugador</h2>
         <input type="text" id="playerName" placeholder="Nombre jugador">
-        <input type="text" id="playerImageUrl" placeholder="URL imagen (opcional)" style="width:300px;">
+        <input type="text" id="playerImageUrl" placeholder="URL imagen del jugador (fondo de tarjeta)" style="width:300px;">
         <button id="addPlayerBtn">Agregar Jugador</button>
 
-        <h2>📊 Tabla de Posiciones</h2>
-        <div style="overflow-x: auto;">
-            <table id="standingsTable">
-                <thead>
-                    <tr>
-                        <th>#</th><th>Jugador</th><th>W</th><th>L</th><th>Puntos</th><th>%</th><th>Racha</th><th>Diff Total</th>
-                    </tr>
-                </thead>
-                <tbody id="standings"></tbody>
-            </table>
-        </div>
-
-        <h2>🏆 Jugadores</h2>
+        <div class="players-title">🏆 ESTADÍSTICAS AVANZADAS - VS CADA RIVAL 🏆</div>
         <div class="card-container" id="cards"></div>
     </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue, get, update, remove } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, push, set, onValue, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyB8oEVWDRvMF4J5CzCcs2-th4pa6za-hm8",
     authDomain: "liga-nba2k26.firebaseapp.com",
@@ -482,38 +600,9 @@ let matches = [];
 let currentUser = null;
 let pendingMatches = [];
 
-// CREDENCIALES DEL ADMINISTRADOR
 const ADMIN_USERNAME = "luislithgow1";
 const ADMIN_PASSWORD = "Sdo2007061001$";
-
-// ============ MAPEO DE NOMBRES DE JUGADORES A USUARIOS ============
-// Esta es la clave: mapea el nombre del jugador en la lista con el nombre de usuario
-const playerToUserMap = {
-    "Luis": "luislithgow1",
-    "luislithgow1": "luislithgow1",
-    "Luis Lithgow": "luislithgow1",
-    "admin": "luislithgow1"
-};
-
-// Función para obtener el nombre de usuario real a partir del nombre del jugador
-function getUsernameFromPlayerName(playerName) {
-    if (!playerName) return null;
-    
-    // Primero verificar en el mapa
-    if (playerToUserMap[playerName]) {
-        return playerToUserMap[playerName];
-    }
-    
-    // Si no está en el mapa, buscar si hay un usuario con el mismo nombre
-    // (comparación case-insensitive)
-    const lowerPlayerName = playerName.trim().toLowerCase();
-    
-    // Buscar en los usuarios si existe un match
-    // Esta parte se completará cuando carguemos los usuarios
-    return playerName; // Por defecto, usar el mismo nombre
-}
-
-// ============ FUNCIONES DE UI ============
+const CODE_EXPIRY_MINUTES = 5; // 5 minutos de expiración
 
 function showToast(message, type) {
     const toast = document.createElement('div');
@@ -522,744 +611,308 @@ function showToast(message, type) {
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
 }
+function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
 
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// ============ ADMINISTRACIÓN DE USUARIOS ============
-
+// ============ ADMIN FUNCTIONS ============
 async function loadAdminData() {
-    if (!currentUser || !currentUser.isAdmin) return;
-    
-    try {
-        const snapshot = await get(usersRef);
-        const users = snapshot.val() || {};
-        
-        const pendingList = document.getElementById("pendingList");
-        const usersList = document.getElementById("usersList");
-        
-        if (pendingList) pendingList.innerHTML = "";
-        if (usersList) usersList.innerHTML = "";
-        
-        let hasPending = false;
-        
-        for (let key in users) {
-            const user = users[key];
-            if (user.username !== ADMIN_USERNAME && user.approved !== true) {
-                hasPending = true;
-                if (pendingList) {
-                    pendingList.innerHTML += `
-                        <div class="pending-user">
-                            <div>
-                                <strong>👤 ${escapeHtml(user.username)}</strong><br>
-                                <span style="font-size:11px; color:#aaa;">📅 ${user.createdAt ? new Date(user.createdAt).toLocaleString() : 'Fecha desconocida'}</span>
-                            </div>
-                            <div>
-                                <button class="approve-btn" data-id="${key}">✓ Aprobar</button>
-                                <button class="reject-btn" data-id="${key}">✗ Rechazar</button>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
+    if (!currentUser?.isAdmin) return;
+    const snapshot = await get(usersRef);
+    const users = snapshot.val() || {};
+    const pendingList = document.getElementById("pendingList");
+    const usersList = document.getElementById("usersList");
+    if (pendingList) pendingList.innerHTML = "";
+    if (usersList) usersList.innerHTML = "";
+    let hasPending = false;
+    for (let key in users) {
+        const user = users[key];
+        if (user.username !== ADMIN_USERNAME && user.approved !== true) {
+            hasPending = true;
+            pendingList.innerHTML += `<div class="pending-user"><div><strong>👤 ${escapeHtml(user.username)}</strong></div><div><button class="approve-btn" data-id="${key}">✓ Aprobar</button><button class="reject-btn" data-id="${key}">✗ Rechazar</button></div></div>`;
         }
-        
-        if (pendingList && !hasPending) {
-            pendingList.innerHTML = "<p style='color:#aaa; text-align:center;'>✅ No hay solicitudes pendientes</p>";
-        }
-        
-        for (let key in users) {
-            const user = users[key];
-            if (user.approved === true) {
-                if (usersList) {
-                    usersList.innerHTML += `
-                        <div class="user-item">
-                            <span>👤 ${escapeHtml(user.username)} ${user.isAdmin ? '👑 <span style="color:#ffd633;">(Admin)</span>' : ''}</span>
-                            ${user.username !== ADMIN_USERNAME ? `<button class="delete-user-btn" data-id="${key}">🗑️ Eliminar</button>` : '<span style="font-size:11px; color:#888;">🔒 Admin Principal</span>'}
-                        </div>
-                    `;
-                }
-            }
-        }
-        
-        if (usersList && usersList.innerHTML === "") {
-            usersList.innerHTML = "<p style='color:#aaa; text-align:center;'>No hay usuarios aprobados</p>";
-        }
-        
-        document.querySelectorAll('.approve-btn').forEach(btn => {
-            btn.onclick = () => approveUser(btn.getAttribute('data-id'));
-        });
-        document.querySelectorAll('.reject-btn').forEach(btn => {
-            btn.onclick = () => rejectUser(btn.getAttribute('data-id'));
-        });
-        document.querySelectorAll('.delete-user-btn').forEach(btn => {
-            btn.onclick = () => deleteUser(btn.getAttribute('data-id'));
-        });
-        
-    } catch (error) {
-        console.error("Error loading admin data:", error);
     }
+    if (!hasPending && pendingList) pendingList.innerHTML = "<p style='color:#aaa;'>✅ No hay solicitudes</p>";
+    for (let key in users) {
+        if (users[key].approved === true && users[key].username !== ADMIN_USERNAME) {
+            usersList.innerHTML += `<div class="user-item"><span>👤 ${escapeHtml(users[key].username)}</span><button class="delete-user-btn" data-id="${key}">🗑️ Eliminar</button></div>`;
+        }
+    }
+    document.querySelectorAll('.approve-btn').forEach(btn => btn.onclick = () => update(ref(database, `users/${btn.dataset.id}`), { approved: true }).then(() => { showToast("Aprobado", "success"); loadAdminData(); }));
+    document.querySelectorAll('.reject-btn').forEach(btn => btn.onclick = () => remove(ref(database, `users/${btn.dataset.id}`)).then(() => { showToast("Rechazado", "success"); loadAdminData(); }));
+    document.querySelectorAll('.delete-user-btn').forEach(btn => btn.onclick = () => remove(ref(database, `users/${btn.dataset.id}`)).then(() => { showToast("Eliminado", "success"); loadAdminData(); }));
 }
 
-async function approveUser(userId) {
-    try {
-        await update(ref(database, `users/${userId}`), { approved: true });
-        showToast("✅ Usuario aprobado correctamente", "success");
-        await loadAdminData();
-    } catch (error) {
-        console.error("Error approving user:", error);
-        showToast("❌ Error al aprobar usuario", "error");
-    }
-}
-
-async function rejectUser(userId) {
-    if (confirm("¿Estás seguro de rechazar y eliminar este usuario?")) {
-        try {
-            await remove(ref(database, `users/${userId}`));
-            showToast("❌ Usuario rechazado y eliminado", "success");
-            await loadAdminData();
-        } catch (error) {
-            console.error("Error rejecting user:", error);
-            showToast("❌ Error al rechazar usuario", "error");
-        }
-    }
-}
-
-async function deleteUser(userId) {
-    if (confirm("¿Estás seguro de eliminar este usuario permanentemente?")) {
-        try {
-            await remove(ref(database, `users/${userId}`));
-            showToast("🗑️ Usuario eliminado correctamente", "success");
-            await loadAdminData();
-        } catch (error) {
-            console.error("Error deleting user:", error);
-            showToast("❌ Error al eliminar usuario", "error");
-        }
-    }
-}
-
-// ============ REGISTRO Y LOGIN ============
-
-async function register() {
-    const username = document.getElementById("regUsername").value.trim();
-    const password = document.getElementById("regPassword").value;
-    const confirmPassword = document.getElementById("regConfirmPassword").value;
-    
-    if (!username || !password) {
-        showToast("❌ Complete todos los campos", "error");
-        return;
-    }
-    
-    if (username.length < 3) {
-        showToast("❌ El usuario debe tener al menos 3 caracteres", "error");
-        return;
-    }
-    
-    if (password.length < 4) {
-        showToast("❌ La contraseña debe tener al menos 4 caracteres", "error");
-        return;
-    }
-    
-    if (password !== confirmPassword) {
-        showToast("❌ Las contraseñas no coinciden", "error");
-        return;
-    }
-    
-    if (username === ADMIN_USERNAME) {
-        showToast("❌ Este usuario está reservado", "error");
-        return;
-    }
-    
-    try {
-        const snapshot = await get(usersRef);
-        const users = snapshot.val() || {};
-        
-        let userExists = false;
-        for (let key in users) {
-            if (users[key].username === username) {
-                userExists = true;
-                break;
-            }
-        }
-        
-        if (userExists) {
-            showToast("❌ El usuario ya existe", "error");
-            return;
-        }
-        
-        const newUserRef = push(usersRef);
-        await set(newUserRef, {
-            username: username,
-            password: btoa(password),
-            isAdmin: false,
-            approved: false,
-            createdAt: new Date().toISOString()
-        });
-        
-        showToast("✅ Registro exitoso! Espera aprobación del administrador.", "success");
-        
-        document.getElementById("regUsername").value = "";
-        document.getElementById("regPassword").value = "";
-        document.getElementById("regConfirmPassword").value = "";
-        
-        setTimeout(() => {
-            document.getElementById("registerSection").style.display = "none";
-            document.getElementById("loginSection").style.display = "block";
-        }, 2000);
-        
-    } catch (error) {
-        console.error("Error en registro:", error);
-        showToast("❌ Error al registrar usuario", "error");
-    }
-}
-
-async function login() {
-    const username = document.getElementById("loginUsername").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    
-    if (!username || !password) {
-        showToast("❌ Complete todos los campos", "error");
-        return;
-    }
-    
-    // Login del administrador
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        try {
-            const snapshot = await get(usersRef);
-            const users = snapshot.val() || {};
-            let adminId = null;
-            
-            for (let key in users) {
-                if (users[key].username === ADMIN_USERNAME) {
-                    adminId = key;
-                    break;
-                }
-            }
-            
-            if (!adminId) {
-                const newAdminRef = push(usersRef);
-                await set(newAdminRef, {
-                    username: ADMIN_USERNAME,
-                    password: btoa(ADMIN_PASSWORD),
-                    isAdmin: true,
-                    approved: true,
-                    createdAt: new Date().toISOString()
-                });
-                adminId = newAdminRef.key;
-            } else if (users[adminId].approved !== true) {
-                await update(ref(database, `users/${adminId}`), { approved: true });
-            }
-            
-            currentUser = {
-                id: adminId,
-                username: ADMIN_USERNAME,
-                isAdmin: true
-            };
-            
-            localStorage.setItem("nba2k_currentUser", JSON.stringify(currentUser));
-            
-            document.getElementById("loginSection").style.display = "none";
-            document.getElementById("userPanel").style.display = "block";
-            document.getElementById("currentUserSpan").innerHTML = currentUser.username;
-            document.getElementById("adminBadge").style.display = "inline-block";
-            document.getElementById("adminPanel").style.display = "block";
-            
-            await loadAdminData();
-            
-            onValue(usersRef, () => {
-                if (currentUser && currentUser.isAdmin) loadAdminData();
-            });
-            
-            document.getElementById("loginUsername").value = "";
-            document.getElementById("loginPassword").value = "";
-            showToast(`✅ Bienvenido Administrador ${currentUser.username}!`, "success");
-            
-        } catch (error) {
-            console.error("Error en login admin:", error);
-            showToast("❌ Error al iniciar sesión como administrador", "error");
-        }
-        return;
-    }
-    
-    // Login de usuarios normales
-    try {
-        const snapshot = await get(usersRef);
-        const users = snapshot.val() || {};
-        let foundUser = null;
-        let userId = null;
-        
-        for (let key in users) {
-            if (users[key].username === username && users[key].password === btoa(password)) {
-                foundUser = users[key];
-                userId = key;
-                break;
-            }
-        }
-        
-        if (!foundUser) {
-            showToast("❌ Usuario o contraseña incorrectos", "error");
-            return;
-        }
-        
-        if (!foundUser.approved) {
-            showToast("⏳ Cuenta pendiente de aprobación por el administrador", "error");
-            return;
-        }
-        
-        currentUser = {
-            id: userId,
-            username: foundUser.username,
-            isAdmin: false
-        };
-        
-        localStorage.setItem("nba2k_currentUser", JSON.stringify(currentUser));
-        
-        document.getElementById("loginSection").style.display = "none";
-        document.getElementById("userPanel").style.display = "block";
-        document.getElementById("currentUserSpan").innerHTML = currentUser.username;
-        document.getElementById("adminBadge").style.display = "none";
-        document.getElementById("adminPanel").style.display = "none";
-        
-        document.getElementById("loginUsername").value = "";
-        document.getElementById("loginPassword").value = "";
-        showToast(`✅ Bienvenido ${currentUser.username}!`, "success");
-        
-    } catch (error) {
-        console.error("Error en login:", error);
-        showToast("❌ Error al iniciar sesión", "error");
-    }
-}
-
-function logout() {
-    currentUser = null;
-    localStorage.removeItem("nba2k_currentUser");
-    document.getElementById("userPanel").style.display = "none";
-    document.getElementById("loginSection").style.display = "block";
-    document.getElementById("loginUsername").value = "";
-    document.getElementById("loginPassword").value = "";
-    showToast("👋 Sesión cerrada correctamente", "info");
-}
-
-function showRegister() {
-    document.getElementById("loginSection").style.display = "none";
-    document.getElementById("registerSection").style.display = "block";
-}
-
-function showLogin() {
-    document.getElementById("registerSection").style.display = "none";
-    document.getElementById("loginSection").style.display = "block";
-}
-
-function refreshAdminData() {
-    loadAdminData();
-    showToast("🔄 Datos actualizados", "success");
-}
-
-// ============ SISTEMA DE CÓDIGOS CORREGIDO ============
-
-async function generateLoserCode() {
-    if (!currentUser) {
-        showToast("Debes iniciar sesión primero", "error");
-        return;
-    }
-    
-    const winnerName = document.getElementById("loserPlayer").value;
-    const loserScore = parseInt(document.getElementById("loserScore").value);
-    const winnerScore = parseInt(document.getElementById("winnerScore").value);
-    
-    if (!winnerName) {
-        showToast("❌ Selecciona al jugador que GANÓ el partido", "error");
-        return;
-    }
-    
-    if (isNaN(loserScore) || isNaN(winnerScore)) {
-        showToast("❌ Ingresa los puntajes del partido", "error");
-        return;
-    }
-    
-    if (loserScore < 0 || winnerScore < 0) {
-        showToast("❌ Los puntajes no pueden ser negativos", "error");
-        return;
-    }
-    
-    if (loserScore > 200 || winnerScore > 200) {
-        showToast("❌ Puntaje máximo 200 puntos", "error");
-        return;
-    }
-    
-    if (loserScore >= winnerScore) {
-        showToast("❌ Como perdedor, tu puntaje debe ser MENOR al del ganador", "error");
-        return;
-    }
-    
-    // Verificar que el ganador existe
-    const winnerPlayer = players.find(p => p.name === winnerName);
-    if (!winnerPlayer) {
-        showToast("❌ El jugador seleccionado no existe", "error");
-        return;
-    }
-    
-    // Verificar que no está jugando contra sí mismo
-    if (winnerName === currentUser.username) {
-        showToast("❌ No puedes jugar contra ti mismo", "error");
-        return;
-    }
-    
-    // OBTENER EL NOMBRE DE USUARIO REAL DEL GANADOR
-    // Esto es clave: mapea "Luis" a "luislithgow1"
-    let winnerUsername = winnerName;
-    
-    // Usar el mapa de nombre de jugador a nombre de usuario
-    if (playerToUserMap[winnerName]) {
-        winnerUsername = playerToUserMap[winnerName];
-        console.log(`Mapeando nombre de jugador "${winnerName}" a usuario "${winnerUsername}"`);
-    }
-    
-    // También verificar si hay un usuario registrado con ese nombre
-    try {
-        const usersSnapshot = await get(usersRef);
-        const users = usersSnapshot.val() || {};
-        for (let key in users) {
-            if (users[key].username.toLowerCase() === winnerName.toLowerCase()) {
-                winnerUsername = users[key].username;
-                console.log(`Encontrado usuario "${winnerUsername}" para el jugador "${winnerName}"`);
-                break;
-            }
-        }
-    } catch (error) {
-        console.error("Error buscando usuario:", error);
-    }
-    
-    // Generar código único de 6 dígitos
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    
-    // Crear registro de partido pendiente
-    const pendingMatch = {
-        code: code,
-        winner: winnerUsername,  // Guardamos el nombre de usuario real
-        winnerDisplayName: winnerName,  // Guardamos también el nombre mostrado
-        loser: currentUser.username,
-        loserDisplayName: currentUser.username,
-        winnerScore: winnerScore,
-        loserScore: loserScore,
-        createdBy: currentUser.username,
-        createdAt: new Date().toISOString(),
-        used: false
-    };
-    
-    const newPendingRef = push(pendingMatchesRef);
-    await set(newPendingRef, pendingMatch);
-    
-    // Mostrar el código generado
-    document.getElementById("generatedCodeDisplay").innerHTML = `
-        <div class="code-box new-code">
-            <p style="color: #ffd633;">🎯 ¡Código generado! Envíalo al GANADOR:</p>
-            <div class="code-number">${code}</div>
-            <p><strong>🏆 Ganador:</strong> ${escapeHtml(winnerName)} (Usuario: ${escapeHtml(winnerUsername)})</p>
-            <p><strong>🔴 Perdedor:</strong> ${escapeHtml(currentUser.username)}</p>
-            <p><strong>📊 Resultado:</strong> ${winnerScore} - ${loserScore}</p>
-            <p style="font-size: 12px;">⚠️ El código expira en 10 minutos</p>
-            <button onclick="copyCodeToClipboard('${code}')" style="background: #28a745; margin-top: 10px;">📋 Copiar Código</button>
-        </div>
-    `;
-    
-    // Limpiar campos
-    document.getElementById("loserScore").value = "";
-    document.getElementById("winnerScore").value = "";
-    document.getElementById("loserPlayer").value = "";
-    
-    showToast(`✅ Código generado! Envíalo al ganador ${winnerName} (${winnerUsername})`, "success");
-    
-    // Auto-expiración después de 10 minutos
-    setTimeout(async () => {
-        const snapshot = await get(pendingMatchesRef);
-        const matches = snapshot.val() || {};
-        for (let key in matches) {
-            if (matches[key].code === code && !matches[key].used) {
-                await remove(ref(database, `pendingMatches/${key}`));
-                if (document.getElementById("generatedCodeDisplay").innerHTML.includes(code)) {
-                    document.getElementById("generatedCodeDisplay").innerHTML = `<div style="color: #ff4d4d; padding: 15px;">⏰ El código ha expirado</div>`;
-                }
-                showToast(`⏰ El código ${code} ha expirado`, "warning");
-            }
-        }
-    }, 600000);
-}
-
-window.copyCodeToClipboard = function(code) {
-    navigator.clipboard.writeText(code);
-    showToast("📋 Código copiado al portapapeles", "success");
-};
-
-async function registerWinWithCode() {
-    if (!currentUser) {
-        showToast("❌ Debes iniciar sesión primero", "error");
-        return;
-    }
-    
-    const code = document.getElementById("winnerCodeInput").value.trim();
-    
-    if (!code) {
-        showToast("❌ Ingresa el código que te dio el perdedor", "error");
-        return;
-    }
-    
-    try {
-        const snapshot = await get(pendingMatchesRef);
-        const pending = snapshot.val() || {};
-        
-        let matchKey = null;
-        let matchData = null;
-        
-        for (let key in pending) {
-            if (pending[key].code === code && !pending[key].used) {
-                matchData = pending[key];
-                matchKey = key;
-                break;
-            }
-        }
-        
-        if (!matchData) {
-            showToast("❌ Código inválido o ya fue utilizado", "error");
-            return;
-        }
-        
-        // CORREGIDO: Comparación usando el nombre de usuario almacenado
-        const currentUsername = currentUser.username.trim().toLowerCase();
-        const winnerFromCode = matchData.winner.trim().toLowerCase();
-        
-        console.log("Comparando:", currentUsername, "vs", winnerFromCode);
-        console.log("Datos del código:", matchData);
-        
-        if (currentUsername !== winnerFromCode) {
-            showToast(`❌ Este código no es para ti. El código fue generado para que lo use: ${matchData.winnerDisplayName || matchData.winner}`, "error");
-            return;
-        }
-        
-        // Obtener los jugadores (para mostrar en la tabla, usar los nombres mostrados)
-        const winner = players.find(p => p.name === (matchData.winnerDisplayName || matchData.winner));
-        const loser = players.find(p => p.name === (matchData.loserDisplayName || matchData.loser));
-        
-        if (!winner || !loser) {
-            showToast("❌ Error: Jugador no encontrado en la lista", "error");
-            return;
-        }
-        
-        // Registrar el partido en el historial
-        const newMatch = push(matchesRef);
-        await set(newMatch, {
-            p1: winner.name,
-            p2: loser.name,
-            s1: matchData.winnerScore,
-            s2: matchData.loserScore,
-            registeredBy: currentUser.username,
-            registeredAt: new Date().toISOString(),
-            codeUsed: code
-        });
-        
-        // Actualizar estadísticas
-        winner.wins++;
-        winner.points += 3;
-        loser.losses++;
-        
-        await set(playersRef, players);
-        
-        // Marcar el código como usado
-        await update(ref(database, `pendingMatches/${matchKey}`), { used: true });
-        
-        // Limpiar y mostrar éxito
-        document.getElementById("winnerCodeInput").value = "";
-        showToast(`🏆 ¡VICTORIA REGISTRADA! ${winner.name} derrotó a ${loser.name}`, "success");
-        
-        // Actualizar UI
-        updateUI();
-        
-    } catch (error) {
-        console.error("Error registrando victoria:", error);
-        showToast("❌ Error al registrar el partido", "error");
-    }
-}
-
-function updatePendingMatchesList() {
-    const container = document.getElementById("pendingMatchesList");
-    if (!container) return;
-    
+// Admin: mostrar códigos activos y permitir eliminarlos
+function updateAdminCodesList() {
+    const container = document.getElementById("adminCodesList");
+    if (!container || !currentUser?.isAdmin) return;
     container.innerHTML = "";
-    
-    const activeMatches = pendingMatches.filter(m => !m.used);
-    
-    if (activeMatches.length === 0) {
+    const activeCodes = pendingMatches.filter(m => !m.used);
+    if (activeCodes.length === 0) {
         container.innerHTML = "<p style='color:#aaa; text-align:center;'>✅ No hay códigos activos</p>";
         return;
     }
-    
-    activeMatches.forEach(match => {
-        const timeLeft = getTimeLeft(match.createdAt);
-        const winnerDisplay = match.winnerDisplayName || match.winner;
-        const isCurrentUserWinner = currentUser && match.winner === currentUser.username;
-        
-        container.innerHTML += `
-            <div class="pending-match">
-                <div>
-                    <strong>🏆 ${escapeHtml(winnerDisplay)}</strong> vs <strong>${escapeHtml(match.loserDisplayName || match.loser)}</strong><br>
-                    <span style="font-size: 12px;">📊 ${match.winnerScore} - ${match.loserScore}</span><br>
-                    <span class="badge ${isCurrentUserWinner ? 'badge-success' : 'badge-warning'}">
-                        🔑 Código: ${match.code}
-                    </span>
-                    ${isCurrentUserWinner ? '<span class="badge badge-info" style="margin-left: 5px;">✨ ¡Es para ti!</span>' : ''}
+    for (let key in pendingMatches) {
+        const match = pendingMatches[key];
+        if (!match.used && match.id) {
+            const timeLeft = getTimeLeft(match.createdAt);
+            container.innerHTML += `
+                <div class="pending-code-item">
+                    <div>
+                        <strong>🔑 ${match.code}</strong><br>
+                        <span style="font-size:11px;">${match.winner} vs ${match.loser}</span><br>
+                        <span style="font-size:10px; color:#aaa;">Expira: ${timeLeft}</span>
+                    </div>
+                    <button class="delete-code-btn" data-id="${match.id}">🗑️ Eliminar</button>
                 </div>
-                <div style="text-align: right;">
-                    <span style="font-size: 11px; color: #aaa;">⏳ Expira en: ${timeLeft}</span>
-                </div>
-            </div>
-        `;
+            `;
+        }
+    }
+    document.querySelectorAll('.delete-code-btn').forEach(btn => {
+        btn.onclick = () => deleteCodeManually(btn.dataset.id);
     });
 }
 
+async function deleteCodeManually(codeId) {
+    if (!currentUser?.isAdmin) return;
+    if (confirm("¿Eliminar este código activo?")) {
+        await remove(ref(database, `pendingMatches/${codeId}`));
+        showToast("✅ Código eliminado", "success");
+    }
+}
+
+// ============ LOGIN/REGISTER ============
+async function register() {
+    const username = document.getElementById("regUsername").value.trim();
+    const pwd = document.getElementById("regPassword").value;
+    const confirm = document.getElementById("regConfirmPassword").value;
+    if (!username || pwd.length < 4 || pwd !== confirm) { showToast("❌ Datos inválidos", "error"); return; }
+    const snapshot = await get(usersRef);
+    const users = snapshot.val() || {};
+    if (Object.values(users).some(u => u.username === username)) { showToast("❌ Usuario existe", "error"); return; }
+    await set(push(usersRef), { username, password: btoa(pwd), isAdmin: false, approved: false, createdAt: new Date().toISOString() });
+    showToast("✅ Registrado, espera aprobación", "success");
+    showLogin();
+}
+async function login() {
+    const username = document.getElementById("loginUsername").value.trim();
+    const pwd = document.getElementById("loginPassword").value;
+    if (username === ADMIN_USERNAME && pwd === ADMIN_PASSWORD) {
+        currentUser = { username: ADMIN_USERNAME, isAdmin: true };
+        localStorage.setItem("nba2k_currentUser", JSON.stringify(currentUser));
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("userPanel").style.display = "block";
+        document.getElementById("currentUserSpan").innerHTML = currentUser.username;
+        document.getElementById("adminBadge").style.display = "inline-block";
+        document.getElementById("adminPanel").style.display = "block";
+        await loadAdminData();
+        showToast("✅ Admin inició sesión", "success");
+        return;
+    }
+    const snapshot = await get(usersRef);
+    const users = snapshot.val() || {};
+    let found = null, id = null;
+    for (let key in users) {
+        if (users[key].username === username && users[key].password === btoa(pwd)) { found = users[key]; id = key; break; }
+    }
+    if (!found) { showToast("❌ Credenciales inválidas", "error"); return; }
+    if (!found.approved) { showToast("⏳ Cuenta pendiente", "error"); return; }
+    currentUser = { id, username: found.username, isAdmin: false };
+    localStorage.setItem("nba2k_currentUser", JSON.stringify(currentUser));
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("userPanel").style.display = "block";
+    document.getElementById("currentUserSpan").innerHTML = currentUser.username;
+    document.getElementById("adminBadge").style.display = "none";
+    document.getElementById("adminPanel").style.display = "none";
+    showToast(`✅ Bienvenido ${currentUser.username}`, "success");
+}
+function logout() { currentUser = null; localStorage.removeItem("nba2k_currentUser"); document.getElementById("userPanel").style.display = "none"; document.getElementById("loginSection").style.display = "block"; showToast("👋 Sesión cerrada", "info"); }
+function showRegister() { document.getElementById("loginSection").style.display = "none"; document.getElementById("registerSection").style.display = "block"; }
+function showLogin() { document.getElementById("registerSection").style.display = "none"; document.getElementById("loginSection").style.display = "block"; }
+
+// ============ SISTEMA DE CÓDIGOS ============
 function getTimeLeft(createdAt) {
+    if (!createdAt) return "N/A";
     const created = new Date(createdAt);
-    const expires = new Date(created.getTime() + 600000);
-    const now = new Date();
-    const diff = expires - now;
-    
+    const expires = new Date(created.getTime() + CODE_EXPIRY_MINUTES * 60 * 1000);
+    const diff = expires - new Date();
     if (diff <= 0) return "Expirado";
-    
     const minutes = Math.floor(diff / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
     return `${minutes}m ${seconds}s`;
 }
 
-// ============ FUNCIONES DE LA LIGA ============
-
-function addPlayer() {
-    if (!currentUser) {
-        showToast("Debes iniciar sesión primero", "error");
-        return;
+// Función para eliminar códigos expirados automáticamente
+async function autoDeleteExpiredCodes() {
+    const now = new Date();
+    for (const match of pendingMatches) {
+        if (match.used) continue;
+        if (match.createdAt) {
+            const created = new Date(match.createdAt);
+            const expiryTime = created.getTime() + CODE_EXPIRY_MINUTES * 60 * 1000;
+            if (now.getTime() > expiryTime && match.id) {
+                await remove(ref(database, `pendingMatches/${match.id}`));
+                console.log(`Código ${match.code} eliminado automáticamente por expiración (${CODE_EXPIRY_MINUTES} min)`);
+            }
+        }
     }
-    
-    const name = document.getElementById("playerName").value.trim();
-    const img = document.getElementById("playerImageUrl").value.trim();
-    if (!name) {
-        showToast("❌ Ingresa un nombre de jugador", "error");
-        return;
-    }
-    
-    const newRef = push(playersRef);
-    set(newRef, { name, wins: 0, losses: 0, points: 0, streak: 0, image: img });
-    
-    document.getElementById("playerName").value = "";
-    document.getElementById("playerImageUrl").value = "";
-    showToast(`✅ Jugador "${name}" agregado correctamente`, "success");
 }
 
+async function generateLoserCode() {
+    if (!currentUser) return;
+    const winnerName = document.getElementById("loserPlayer").value;
+    const loserScore = parseInt(document.getElementById("loserScore").value);
+    const winnerScore = parseInt(document.getElementById("winnerScore").value);
+    if (!winnerName || isNaN(loserScore) || isNaN(winnerScore) || loserScore >= winnerScore) { showToast("❌ Datos inválidos", "error"); return; }
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const newRef = push(pendingMatchesRef);
+    await set(newRef, { code, winner: winnerName, loser: currentUser.username, winnerScore, loserScore, used: false, createdAt: new Date().toISOString(), id: newRef.key });
+    document.getElementById("generatedCodeDisplay").innerHTML = `<div class="code-box"><div class="code-number">${code}</div><p>Envía este código al ganador: ${winnerName}</p><p style="font-size:12px; color:#ffd633;">⏰ Expira en ${CODE_EXPIRY_MINUTES} minutos</p><button onclick="navigator.clipboard.writeText('${code}')">📋 Copiar</button></div>`;
+    showToast("✅ Código generado", "success");
+    document.getElementById("loserScore").value = "";
+    document.getElementById("winnerScore").value = "";
+    document.getElementById("loserPlayer").value = "";
+}
+
+async function registerWinWithCode() {
+    const code = document.getElementById("winnerCodeInput").value.trim();
+    const snapshot = await get(pendingMatchesRef);
+    const pendings = snapshot.val() || {};
+    let matchKey = null, match = null;
+    for (let key in pendings) {
+        if (pendings[key].code === code && !pendings[key].used) { match = pendings[key]; matchKey = key; break; }
+    }
+    if (!match || match.winner !== currentUser.username) { showToast("❌ Código inválido", "error"); return; }
+    const winner = players.find(p => p.name === match.winner);
+    const loser = players.find(p => p.name === match.loser);
+    if (!winner || !loser) { showToast("❌ Jugador no encontrado", "error"); return; }
+    await set(push(matchesRef), { p1: winner.name, p2: loser.name, s1: match.winnerScore, s2: match.loserScore, registeredAt: new Date().toISOString() });
+    winner.wins++; winner.points += 3; loser.losses++;
+    await set(playersRef, players);
+    await update(ref(database, `pendingMatches/${matchKey}`), { used: true });
+    document.getElementById("winnerCodeInput").value = "";
+    showToast(`🏆 Victoria registrada!`, "success");
+}
+
+function updatePendingMatchesList() {
+    const container = document.getElementById("pendingMatchesList");
+    if (!container) return;
+    container.innerHTML = "";
+    const activeMatches = pendingMatches.filter(m => !m.used);
+    if (activeMatches.length === 0) { container.innerHTML = "<p>✅ Sin códigos activos</p>"; return; }
+    activeMatches.forEach(m => {
+        const timeLeft = getTimeLeft(m.createdAt);
+        container.innerHTML += `<div class="pending-match"><div><strong>🔑 ${m.code}</strong><br>${m.winner} vs ${m.loser}<br><span style="font-size:11px;">⏳ ${timeLeft}</span></div></div>`;
+    });
+}
+
+function addPlayer() {
+    const name = document.getElementById("playerName").value.trim();
+    const img = document.getElementById("playerImageUrl").value.trim();
+    if (!name) return;
+    set(push(playersRef), { name, wins: 0, losses: 0, points: 0, streak: 0, totalDiff: 0, image: img });
+    showToast(`✅ ${name} agregado`, "success");
+    document.getElementById("playerName").value = "";
+    document.getElementById("playerImageUrl").value = "";
+}
+
+// Estadísticas avanzadas
+function calculateHeadToHead(player, allPlayers, allMatches) {
+    const results = [];
+    for (const opponent of allPlayers) {
+        if (opponent.name === player.name) continue;
+        let wins = 0, losses = 0, totalPointsDiff = 0;
+        const matchesVs = allMatches.filter(m => 
+            (m.p1 === player.name && m.p2 === opponent.name) || 
+            (m.p1 === opponent.name && m.p2 === player.name)
+        );
+        for (const m of matchesVs) {
+            const isPlayerWinner = (m.p1 === player.name && m.s1 > m.s2) || (m.p2 === player.name && m.s2 > m.s1);
+            if (isPlayerWinner) wins++;
+            else losses++;
+            const playerPoints = m.p1 === player.name ? m.s1 : m.s2;
+            const oppPoints = m.p1 === opponent.name ? m.s1 : m.s2;
+            totalPointsDiff += (playerPoints - oppPoints);
+        }
+        const totalGames = wins + losses;
+        const winProb = totalGames > 0 ? (wins / totalGames) * 100 : 0;
+        results.push({ opponentName: opponent.name, wins, losses, prob: winProb, diff: totalPointsDiff });
+    }
+    return results.sort((a,b) => b.prob - a.prob);
+}
+
+// Actualizar UI con imágenes como fondo de tarjeta
 function updateUI() {
     const cards = document.getElementById("cards");
-    const standings = document.getElementById("standings");
     const loserSelect = document.getElementById("loserPlayer");
-    
     if (cards) cards.innerHTML = "";
-    if (standings) standings.innerHTML = "";
     if (loserSelect) {
         loserSelect.innerHTML = "<option value=''>Selecciona al GANADOR...</option>";
-        players.forEach(p => {
-            // No mostrar al usuario actual como opción (no puede jugar contra sí mismo)
-            if (p.name !== currentUser?.username && p.name !== "luislithgow1") {
-                loserSelect.innerHTML += `<option value="${escapeHtml(p.name)}">${escapeHtml(p.name)}</option>`;
-            }
-        });
-        // Agregar "Luis" como opción separada si es necesario
-        if (!players.find(p => p.name === "Luis")) {
-            loserSelect.innerHTML += `<option value="Luis">Luis (Admin)</option>`;
-        }
+        players.forEach(p => { if (p.name !== currentUser?.username) loserSelect.innerHTML += `<option value="${escapeHtml(p.name)}">${escapeHtml(p.name)}</option>`; });
     }
     
     if (players && matches) {
-        // Calcular rachas
         players.forEach(p => {
             p.totalDiff = 0;
-            let lastResult = null;
-            let currentStreak = 0;
-            
-            const playerMatches = matches.filter(m => m.p1 === p.name || m.p2 === p.name);
-            playerMatches.sort((a, b) => new Date(a.registeredAt) - new Date(b.registeredAt));
-            
+            let lastResult = null, currentStreak = 0;
+            const playerMatches = matches.filter(m => m.p1 === p.name || m.p2 === p.name).sort((a,b) => new Date(a.registeredAt) - new Date(b.registeredAt));
             playerMatches.forEach(m => {
                 const isWinner = (m.p1 === p.name && m.s1 > m.s2) || (m.p2 === p.name && m.s2 > m.s1);
-                if (isWinner) {
-                    if (lastResult === 'win') currentStreak++;
-                    else currentStreak = 1;
-                    lastResult = 'win';
-                } else {
-                    if (lastResult === 'loss') currentStreak--;
-                    else currentStreak = -1;
-                    lastResult = 'loss';
-                }
+                if (isWinner) { if (lastResult === 'win') currentStreak++; else currentStreak = 1; lastResult = 'win'; }
+                else { if (lastResult === 'loss') currentStreak--; else currentStreak = -1; lastResult = 'loss'; }
+                if (m.p1 === p.name) p.totalDiff += m.s1 - m.s2;
+                else p.totalDiff += m.s2 - m.s1;
             });
             p.streak = currentStreak;
-            
-            matches.forEach(m => {
-                if (m.p1 === p.name) p.totalDiff += m.s1 - m.s2;
-                if (m.p2 === p.name) p.totalDiff += m.s2 - m.s1;
-            });
         });
-        
-        players.sort((a, b) => {
-            if (b.points !== a.points) return b.points - a.points;
-            const aPct = a.wins / (a.wins + a.losses || 1);
-            const bPct = b.wins / (b.wins + b.losses || 1);
-            if (bPct !== aPct) return bPct - aPct;
-            return b.totalDiff - a.totalDiff;
-        });
-    }
-    
-    if (players && standings) {
-        players.forEach((p, index) => {
-            const total = p.wins + p.losses;
-            const pct = total > 0 ? ((p.wins / total) * 100).toFixed(1) : 0;
-            let icon = "⚔️";
-            let streakIcon = "";
-            if (index === 0) icon = "🥇";
-            else if (index === 1) icon = "🥈";
-            else if (index === 2) icon = "🥉";
-            
-            if (p.streak > 0) streakIcon = `🔥 +${p.streak}`;
-            else if (p.streak < 0) streakIcon = `❌ ${p.streak}`;
-            else streakIcon = "⚡ 0";
-            
-            standings.innerHTML += `
-                <tr>
-                    <td>${icon} ${index + 1}</td>
-                    <td><strong>${escapeHtml(p.name)}</strong></td>
-                    <td class="green">${p.wins}</td>
-                    <td class="red">${p.losses}</td>
-                    <td>${p.points}</td>
-                    <td>${pct}%</td>
-                    <td class="${p.streak > 0 ? 'green' : p.streak < 0 ? 'red' : 'yellow'}">${streakIcon}</td>
-                    <td>${p.totalDiff > 0 ? '+' : ''}${p.totalDiff}</td>
-                </tr>
-            `;
-        });
+        players.sort((a,b) => b.points - a.points || (b.wins/(b.wins+b.losses||1)) - (a.wins/(a.wins+a.losses||1)) || b.totalDiff - a.totalDiff);
     }
     
     if (players && cards) {
-        players.forEach(p => {
+        players.forEach((p, index) => {
             const total = p.wins + p.losses;
-            const winPercent = total > 0 ? (p.wins / total) : 0;
-            const bg = p.image && p.image.trim() !== "" ? p.image : "https://via.placeholder.com/300x450?text=NBA+Player";
+            const globalPct = total > 0 ? ((p.wins / total) * 100).toFixed(1) : 0;
+            const defaultImage = "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=550&fit=crop";
+            const bgImage = p.image && p.image.trim() !== "" ? p.image : defaultImage;
+            const h2hStats = calculateHeadToHead(p, players, matches);
+            
+            let rankClass = "", rankIcon = "";
+            if (index === 0) { rankClass = "rank-1"; rankIcon = "🥇 #1"; }
+            else if (index === 1) { rankClass = "rank-2"; rankIcon = "🥈 #2"; }
+            else if (index === 2) { rankClass = "rank-3"; rankIcon = "🥉 #3"; }
+            else rankIcon = `#${index+1}`;
+            
+            let streakIcon = p.streak > 0 ? `🔥 +${p.streak}` : (p.streak < 0 ? `❌ ${p.streak}` : "⚡ 0");
+            const diffColor = p.totalDiff > 0 ? 'green' : (p.totalDiff < 0 ? 'red' : 'yellow');
+            
+            let vsHtml = "";
+            if (h2hStats.length === 0) {
+                vsHtml = `<div class="empty-vs">📭 Sin enfrentamientos registrados</div>`;
+            } else {
+                vsHtml = `<div class="vs-header-row"><span>RIVAL</span><span>RÉCORD</span><span>PROB.</span><span>DIF</span></div>`;
+                for (const vs of h2hStats) {
+                    const probClass = vs.prob >= 60 ? 'prob-high' : (vs.prob >= 40 ? 'prob-mid' : 'prob-low');
+                    vsHtml += `<div class="vs-row"><span class="vs-opponent" title="${escapeHtml(vs.opponentName)}">${escapeHtml(vs.opponentName)}</span><span class="vs-record">${vs.wins}-${vs.losses}</span><span class="vs-prob ${probClass}">${vs.prob.toFixed(1)}%</span><span class="vs-diff ${vs.diff > 0 ? 'green' : (vs.diff < 0 ? 'red' : 'yellow')}">${vs.diff > 0 ? '+' : ''}${vs.diff}</span></div>`;
+                }
+            }
             
             cards.innerHTML += `
-                <div class="card" style="background-image:url('${bg}')">
+                <div class="card" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
+                    <div class="rank-badge ${rankClass}">${rankIcon}</div>
                     <div class="card-overlay">
-                        <h3>🏀 ${escapeHtml(p.name)}</h3>
-                        <div>✅ Victorias: ${p.wins}</div>
-                        <div>❌ Derrotas: ${p.losses}</div>
-                        <div>📈 % Global: ${(winPercent * 100).toFixed(1)}%</div>
-                        <div>🌟 Puntos: ${p.points}</div>
-                        <div>⚡ Racha: ${p.streak > 0 ? '+' : ''}${p.streak}</div>
+                        <h3>${escapeHtml(p.name)}</h3>
+                        <div class="stats-grid">
+                            <div class="stat-cell"><div class="stat-label-small">✅ VICTORIAS</div><div class="stat-value-medium wins">${p.wins}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">❌ DERROTAS</div><div class="stat-value-medium losses">${p.losses}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">📊 % GLOBAL</div><div class="stat-value-medium percentage">${globalPct}%</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">🌟 PUNTOS</div><div class="stat-value-medium points">${p.points}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">⚡ RACHA</div><div class="stat-value-medium streak">${streakIcon}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">📊 DIF TOTAL</div><div class="stat-value-medium ${diffColor}">${p.totalDiff > 0 ? '+' : ''}${p.totalDiff}</div></div>
+                        </div>
+                        <div class="vs-section">
+                            <div class="vs-title">🎯 VS CADA RIVAL</div>
+                            <div class="vs-container">${vsHtml}</div>
+                        </div>
+                        <div class="total-row"><span class="total-label">🏆 PARTIDOS TOTALES</span><span class="total-value">${total}</span></div>
                     </div>
                 </div>
             `;
@@ -1267,60 +920,50 @@ function updateUI() {
     }
 }
 
-// ============ EVENT LISTENERS ============
+// Configurar intervalo de eliminación automática cada 30 segundos
+setInterval(async () => {
+    await autoDeleteExpiredCodes();
+}, 30000);
+
+// Event listeners
 document.getElementById("loginBtn")?.addEventListener("click", login);
 document.getElementById("showRegisterBtn")?.addEventListener("click", showRegister);
 document.getElementById("registerBtn")?.addEventListener("click", register);
 document.getElementById("backToLoginBtn")?.addEventListener("click", showLogin);
 document.getElementById("logoutBtn")?.addEventListener("click", logout);
-document.getElementById("refreshAdminBtn")?.addEventListener("click", refreshAdminData);
+document.getElementById("refreshAdminBtn")?.addEventListener("click", loadAdminData);
+document.getElementById("refreshCodesBtn")?.addEventListener("click", () => updateAdminCodesList());
 document.getElementById("generateLoserCodeBtn")?.addEventListener("click", generateLoserCode);
 document.getElementById("registerWinBtn")?.addEventListener("click", registerWinWithCode);
 document.getElementById("addPlayerBtn")?.addEventListener("click", addPlayer);
 
-// ============ LISTENERS DE FIREBASE ============
-onValue(playersRef, (s) => {
-    const data = s.val();
-    players = data ? Object.values(data) : [];
-    updateUI();
-});
-
-onValue(matchesRef, (s) => {
-    const data = s.val();
-    matches = data ? Object.values(data) : [];
-    updateUI();
-});
-
-onValue(pendingMatchesRef, (s) => {
-    const data = s.val();
-    pendingMatches = data ? Object.values(data) : [];
+// Firebase listeners
+onValue(playersRef, (s) => { players = s.val() ? Object.values(s.val()) : []; updateUI(); });
+onValue(matchesRef, (s) => { matches = s.val() ? Object.values(s.val()) : []; updateUI(); });
+onValue(pendingMatchesRef, (s) => { 
+    const data = s.val(); 
+    pendingMatches = data ? Object.entries(data).map(([id, val]) => ({ ...val, id })) : []; 
     updatePendingMatchesList();
+    if (currentUser?.isAdmin) updateAdminCodesList();
 });
 
-// ============ RESTAURAR SESIÓN ============
+// Restaurar sesión
 const savedUser = localStorage.getItem("nba2k_currentUser");
 if (savedUser) {
-    try {
-        const user = JSON.parse(savedUser);
-        currentUser = user;
+    try { 
+        currentUser = JSON.parse(savedUser); 
         document.getElementById("loginSection").style.display = "none";
         document.getElementById("userPanel").style.display = "block";
         document.getElementById("currentUserSpan").innerHTML = currentUser.username;
-        if (currentUser.isAdmin) {
-            document.getElementById("adminBadge").style.display = "inline-block";
-            document.getElementById("adminPanel").style.display = "block";
-            loadAdminData();
+        if (currentUser.isAdmin) { 
+            document.getElementById("adminBadge").style.display = "inline-block"; 
+            document.getElementById("adminPanel").style.display = "block"; 
+            loadAdminData(); 
         }
-    } catch (e) {
-        console.log("Error loading saved user");
-    }
+    } catch(e) {}
 }
 
-console.log("🔥 Liga NBA 2K26 ELITE - Sistema CORREGIDO");
-console.log("📌 MAPEO DE NOMBRES: 'Luis' → 'luislithgow1'");
-console.log("📌 EL PERDEDOR genera el código y se lo envía al GANADOR");
-console.log("📌 EL GANADOR usa el código para registrar su victoria");
-console.log("👑 Administrador: luislithgow1 / Sdo2007061001$");
+console.log("✅ Sistema actualizado: expiración en 5 min, admin puede eliminar códigos, imágenes como fondo");
 </script>
 </body>
 </html>
