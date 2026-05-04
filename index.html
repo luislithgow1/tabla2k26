@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Liga NBA 2K26 ELITE - Estadísticas Avanzadas</title>
 
 <style>
@@ -22,20 +22,19 @@ body {
 }
 
 .container {
-    max-width: 1600px;
+    max-width: 1800px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 20px;
 }
 
 h1 {
-    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    font-size: 2.5rem;
     margin-bottom: 20px;
     text-shadow: 0 0 10px rgba(0,123,255,0.5);
 }
 
 h2, h3 {
     margin: 20px 0 15px 0;
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
 }
 
 input, button, select {
@@ -76,133 +75,85 @@ button:active {
     transform: translateY(0);
 }
 
-/* GRID RESPONSIVO - 3 TARJETAS POR FILA EN MÓVIL */
 .card-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
     margin: 30px auto;
     padding: 10px;
 }
 
-/* En tablet: 2 columnas */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .card-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-}
-
-/* En móvil: 3 columnas (como se pidió) */
-@media (max-width: 768px) {
-    .card-container {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        padding: 8px;
-    }
-}
-
-/* En móviles muy pequeños (menos de 500px) */
-@media (max-width: 550px) {
-    .card-container {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
-}
-
-/* En móviles extra pequeños - seguir con 3 columnas pero más compactas */
-@media (max-width: 420px) {
-    .card-container {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-    }
-}
-
 .card {
-    border-radius: 16px;
+    border-radius: 20px;
+    width: 380px;
+    min-width: 340px;
+    max-width: 400px;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    aspect-ratio: 3 / 4;
-    min-height: 0;
+    min-height: 550px;
 }
 
 .card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0,123,255,0.3);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0,123,255,0.4);
 }
 
 /* Overlay oscuro para que el texto sea legible */
 .card-overlay {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.85) 100%);
-    padding: 12px;
-    border-radius: 16px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%);
+    padding: 15px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
+    min-height: 550px;
     backdrop-filter: blur(1px);
-    overflow-y: auto;
-}
-
-/* Scroll personalizado para el contenido de la tarjeta */
-.card-overlay::-webkit-scrollbar {
-    width: 3px;
-}
-.card-overlay::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 3px;
-}
-.card-overlay::-webkit-scrollbar-thumb {
-    background: #ffd633;
-    border-radius: 3px;
 }
 
 .card h3 {
-    font-size: clamp(0.9rem, 3.5vw, 1.3rem);
-    margin-bottom: 6px;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
     color: #ffd633;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
     text-align: center;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    letter-spacing: 1px;
 }
 
-/* Grid de estadísticas principales - más compacto */
+/* Grid de estadísticas principales */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    background: rgba(0,0,0,0.55);
-    border-radius: 10px;
-    padding: 6px;
-    margin-bottom: 8px;
+    gap: 8px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .stat-cell {
     text-align: center;
-    padding: 3px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 6px;
+    padding: 5px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 8px;
 }
 
 .stat-label-small {
-    font-size: clamp(7px, 2.5vw, 9px);
+    font-size: 10px;
     color: #aaa;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.5px;
 }
 
 .stat-value-medium {
-    font-size: clamp(12px, 4vw, 16px);
+    font-size: 18px;
     font-weight: bold;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .wins { color: #00ff88; }
@@ -212,51 +163,59 @@ button:active {
 .streak { color: #ff9f00; }
 .diff { color: #c792ea; }
 
-/* Sección VS RIVALES - más compacta */
+/* Sección VS RIVALES */
 .vs-section {
-    margin-top: 6px;
-    background: rgba(0,0,0,0.55);
-    border-radius: 10px;
+    margin-top: 8px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
     overflow: hidden;
 }
 
 .vs-title {
     background: rgba(255,215,0,0.2);
-    padding: 4px;
+    padding: 8px;
     text-align: center;
     font-weight: bold;
     color: #ffd633;
-    font-size: clamp(8px, 2.5vw, 11px);
-    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
     border-bottom: 1px solid rgba(255,215,0,0.3);
 }
 
 .vs-container {
-    max-height: 130px;
+    max-height: 210px;
     overflow-y: auto;
-    padding: 4px 6px;
+    padding: 5px 8px;
 }
 
 .vs-container::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
+}
+.vs-container::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}
+.vs-container::-webkit-scrollbar-thumb {
+    background: #ffd633;
+    border-radius: 4px;
 }
 
 .vs-header-row {
     display: grid;
-    grid-template-columns: 1fr 0.6fr 0.6fr 0.7fr;
-    padding: 3px 4px;
-    font-size: clamp(7px, 2vw, 9px);
+    grid-template-columns: 1fr 0.7fr 0.7fr 0.8fr;
+    padding: 5px 8px;
+    font-size: 10px;
     color: #ffd633;
     border-bottom: 1px solid rgba(255,215,0,0.2);
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     font-weight: bold;
 }
 
 .vs-row {
     display: grid;
-    grid-template-columns: 1fr 0.6fr 0.6fr 0.7fr;
-    padding: 4px 4px;
-    font-size: clamp(8px, 2.2vw, 10px);
+    grid-template-columns: 1fr 0.7fr 0.7fr 0.8fr;
+    padding: 6px 8px;
+    font-size: 12px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     align-items: center;
 }
@@ -268,26 +227,22 @@ button:active {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
-    font-size: clamp(7px, 2vw, 9px);
 }
 
 .vs-record {
     text-align: center;
     font-family: monospace;
     font-weight: bold;
-    font-size: clamp(7px, 2vw, 9px);
 }
 
 .vs-prob {
     text-align: right;
     font-weight: bold;
-    font-size: clamp(7px, 2vw, 9px);
 }
 
 .vs-diff {
     text-align: right;
     font-weight: bold;
-    font-size: clamp(7px, 2vw, 9px);
 }
 
 .prob-high { color: #00ff88; }
@@ -297,39 +252,39 @@ button:active {
 .empty-vs {
     text-align: center;
     color: #aaa;
-    padding: 10px;
-    font-size: clamp(8px, 2.5vw, 10px);
+    padding: 20px;
+    font-size: 12px;
 }
 
 .total-row {
-    background: rgba(0,0,0,0.55);
-    border-radius: 8px;
-    padding: 5px;
-    margin-top: 8px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .total-label {
-    font-size: clamp(8px, 2.5vw, 10px);
+    font-size: 12px;
     color: #aaa;
 }
 
 .total-value {
-    font-size: clamp(12px, 4vw, 15px);
+    font-size: 18px;
     font-weight: bold;
     color: #ffd633;
 }
 
 .rank-badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 12px;
+    left: 12px;
     background: rgba(0,0,0,0.8);
-    border-radius: 20px;
-    padding: 2px 8px;
-    font-size: clamp(9px, 3vw, 12px);
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 13px;
     font-weight: bold;
     backdrop-filter: blur(4px);
     z-index: 15;
@@ -344,50 +299,34 @@ button:active {
 .red { color: #ff4d4d; }
 .yellow { color: #ffd633; }
 
-/* Secciones de formularios - responsivas */
 .auth-section, .match-section, .login-section {
     background: rgba(26,26,46,0.95);
-    padding: 20px;
+    padding: 25px;
     border-radius: 15px;
-    margin: 15px auto;
-    max-width: 95%;
-    width: 100%;
+    margin: 20px auto;
+    max-width: 650px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0,123,255,0.3);
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-@media (min-width: 768px) {
-    .auth-section, .match-section, .login-section {
-        max-width: 650px;
-        padding: 25px;
-    }
-}
-
 .pending-section {
     background: rgba(42,42,26,0.95);
-    padding: 15px;
+    padding: 20px;
     border-radius: 15px;
     margin: 15px auto;
-    max-width: 95%;
+    max-width: 650px;
     border: 1px solid #ffd633;
-}
-
-@media (min-width: 768px) {
-    .pending-section {
-        max-width: 550px;
-        padding: 20px;
-    }
 }
 
 .user-info {
     background: linear-gradient(135deg, #0a2a0a, #0a1a2a);
-    padding: 12px 20px;
+    padding: 15px 25px;
     border-radius: 50px;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    margin: 15px auto;
+    gap: 15px;
+    margin: 20px auto;
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
     flex-wrap: wrap;
     justify-content: center;
@@ -396,9 +335,9 @@ button:active {
 .admin-badge {
     background: #ffd633;
     color: #000;
-    padding: 4px 12px;
+    padding: 5px 15px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -412,22 +351,22 @@ button:active {
 
 .pending-user, .user-item, .pending-code-item {
     background: #333;
-    padding: 10px;
+    padding: 12px;
     margin: 8px;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
 }
 
 .approve-btn { background: #28a745; }
 .reject-btn, .delete-user-btn, .delete-code-btn { background: #dc3545; }
-.delete-code-btn { background: #ff4444; font-size: 11px; padding: 5px 10px; }
+.delete-code-btn { background: #ff4444; font-size: 12px; padding: 5px 12px; }
 
 .user-list, .codes-list {
-    max-height: 250px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
@@ -435,13 +374,11 @@ button:active {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    padding: 10px 16px;
+    padding: 12px 20px;
     border-radius: 8px;
     color: white;
     z-index: 1000;
     animation: slideIn 0.3s ease;
-    font-size: 14px;
-    max-width: 90%;
 }
 @keyframes slideIn {
     from { transform: translateX(100%); opacity: 0; }
@@ -454,35 +391,34 @@ button:active {
 
 .code-box {
     background: #0e0e0e;
-    padding: 15px;
+    padding: 20px;
     border-radius: 15px;
     margin: 15px 0;
     border: 2px solid #ffd633;
 }
 .code-number {
-    font-size: clamp(24px, 8vw, 48px);
-    letter-spacing: clamp(5px, 3vw, 15px);
+    font-size: 48px;
+    letter-spacing: 15px;
     font-family: monospace;
     font-weight: bold;
     color: #00ff88;
-    word-break: break-all;
 }
 .pending-matches {
-    max-height: 250px;
+    max-height: 300px;
     overflow-y: auto;
     margin-top: 15px;
 }
 .pending-match {
     background: #2a2a3e;
-    padding: 10px;
-    margin: 6px;
+    padding: 12px;
+    margin: 8px;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
-    border-left: 3px solid #ffd633;
+    gap: 10px;
+    border-left: 4px solid #ffd633;
 }
 .info-box {
     background: #1a2a3a;
@@ -492,55 +428,49 @@ button:active {
     text-align: left;
     border-left: 4px solid #007bff;
 }
-.info-box h4 { color: #ffd633; margin-bottom: 8px; font-size: clamp(14px, 4vw, 18px); }
-.info-box p { font-size: clamp(11px, 3vw, 14px); }
+.info-box h4 { color: #ffd633; margin-bottom: 8px; }
+
+@media (max-width: 900px) {
+    .card-container { gap: 15px; }
+    .card { width: 100%; max-width: 380px; }
+    .stats-grid { gap: 5px; padding: 8px; }
+    .vs-header-row, .vs-row { grid-template-columns: 1fr 0.6fr 0.6fr 0.7fr; font-size: 10px; }
+    .vs-container { max-height: 180px; }
+}
+
+@media (max-width: 480px) {
+    .card { min-width: 300px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid .stat-cell:last-child { grid-column: span 2; }
+    .vs-header-row, .vs-row { font-size: 9px; }
+}
 
 hr { margin: 15px 0; border-color: #444; }
 .badge {
     display: inline-block;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
     font-weight: bold;
 }
 .badge-warning { background: #ffc107; color: #000; }
 .badge-success { background: #28a745; color: #fff; }
 .badge-info { background: #17a2b8; color: #fff; }
-
 @keyframes glow {
     0% { box-shadow: 0 0 5px #ffd633; }
     50% { box-shadow: 0 0 20px #ffd633; }
     100% { box-shadow: 0 0 5px #ffd633; }
 }
 .new-code { animation: glow 1s ease-in-out 3; }
-
 .players-title {
-    font-size: clamp(1.3rem, 5vw, 2rem);
-    margin: 30px 0 15px;
+    font-size: 2rem;
+    margin: 40px 0 20px;
     background: linear-gradient(135deg, #ffd633, #ff8c00);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     display: inline-block;
-    padding: 0 15px;
-    text-align: center;
-}
-
-/* Ajustes para inputs en móvil */
-@media (max-width: 768px) {
-    input, button, select {
-        font-size: 13px;
-        padding: 8px 12px;
-    }
-    
-    .container {
-        padding: 10px;
-    }
-    
-    .user-info {
-        gap: 8px;
-        padding: 10px 15px;
-    }
+    padding: 0 20px;
 }
 </style>
 </head>
@@ -550,11 +480,11 @@ hr { margin: 15px 0; border-color: #444; }
 
     <div class="login-section" id="loginSection">
         <h3>🔐 Iniciar Sesión</h3>
-        <div style="background: #0a2a0a; padding: 8px; border-radius: 8px; margin-bottom: 12px; font-size: clamp(11px, 3vw, 14px);">
+        <div style="background: #0a2a0a; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
             <span style="color: #ffd633;">👑 ADMIN:</span> luislithgow1 | Sdo2007061001$
         </div>
-        <input type="text" id="loginUsername" placeholder="Usuario" style="width: 95%;">
-        <input type="password" id="loginPassword" placeholder="Contraseña" style="width: 95%;">
+        <input type="text" id="loginUsername" placeholder="Usuario" style="width: 90%;">
+        <input type="password" id="loginPassword" placeholder="Contraseña" style="width: 90%;">
         <button id="loginBtn" style="background:#28a745;">▶️ Iniciar Sesión</button>
         <button id="showRegisterBtn" style="background:#17a2b8;">📝 Registrarse</button>
         <div id="loginMessage"></div>
@@ -562,13 +492,13 @@ hr { margin: 15px 0; border-color: #444; }
 
     <div class="login-section" id="registerSection" style="display:none;">
         <h3>📝 Registro de Usuario</h3>
-        <input type="text" id="regUsername" placeholder="Nombre de usuario" style="width: 95%;">
-        <input type="password" id="regPassword" placeholder="Contraseña (mínimo 4)" style="width: 95%;">
-        <input type="password" id="regConfirmPassword" placeholder="Confirmar" style="width: 95%;">
+        <input type="text" id="regUsername" placeholder="Nombre de usuario" style="width: 90%;">
+        <input type="password" id="regPassword" placeholder="Contraseña (mínimo 4)" style="width: 90%;">
+        <input type="password" id="regConfirmPassword" placeholder="Confirmar" style="width: 90%;">
         <button id="registerBtn" style="background:#28a745;">✅ Registrarse</button>
         <button id="backToLoginBtn" style="background:#555;">◀️ Volver</button>
         <div id="registerMessage"></div>
-        <p style="font-size:11px; color:#aaa; margin-top:10px;">⚠️ Requiere aprobación del admin</p>
+        <p style="font-size:12px; color:#aaa; margin-top:10px;">⚠️ Requiere aprobación del admin</p>
     </div>
 
     <div id="userPanel" style="display:none;">
@@ -581,7 +511,7 @@ hr { margin: 15px 0; border-color: #444; }
         <div id="adminPanel" style="display:none;" class="auth-section">
             <h3>👑 Panel de Administración</h3>
             <div class="pending-section">
-                <h4>📋 Solicitudes Pendientes</h4>
+                <h4>📋 Solicitudes Pendientes de Usuarios</h4>
                 <div id="pendingList" class="user-list"></div>
                 <button id="refreshAdminBtn" style="background:#17a2b8; margin-top:10px;">🔄 Refrescar</button>
             </div>
@@ -592,17 +522,16 @@ hr { margin: 15px 0; border-color: #444; }
             <div class="pending-section">
                 <h4>⏳ Códigos Activos (Admin puede eliminar)</h4>
                 <div id="adminCodesList" class="codes-list"></div>
-                <button id="refreshCodesBtn" style="background:#17a2b8; margin-top:10px;">🔄 Refrescar</button>
+                <button id="refreshCodesBtn" style="background:#17a2b8; margin-top:10px;">🔄 Refrescar Códigos</button>
             </div>
         </div>
 
-        <div class="info-box" style="max-width: 95%; margin: 0 auto 15px auto;">
+        <div class="info-box" style="max-width: 650px; margin: 0 auto 20px auto;">
             <h4>📖 ¿Cómo funciona?</h4>
             <p>🔴 <strong>El PERDEDOR</strong> genera el código y se lo envía al GANADOR</p>
             <p>🟢 <strong>El GANADOR</strong> usa el código para registrar su victoria</p>
-            <p>⏰ Los códigos expiran automáticamente después de <strong>5 MINUTOS</strong></p>
+            <p>⏰ Los códigos expiran automáticamente después de <strong>5 MINUTOS</strong> si no se usan</p>
             <p>👑 El administrador puede eliminar códigos activos manualmente</p>
-            <p>📱 En móvil se muestran 3 tarjetas por fila</p>
         </div>
 
         <div class="auth-section" id="generatorSection">
@@ -635,8 +564,8 @@ hr { margin: 15px 0; border-color: #444; }
 
         <hr>
         <h2>➕ Agregar Jugador</h2>
-        <input type="text" id="playerName" placeholder="Nombre jugador" style="width: 90%;">
-        <input type="text" id="playerImageUrl" placeholder="URL imagen (fondo de tarjeta)" style="width: 90%;">
+        <input type="text" id="playerName" placeholder="Nombre jugador">
+        <input type="text" id="playerImageUrl" placeholder="URL imagen del jugador (fondo de tarjeta)" style="width:300px;">
         <button id="addPlayerBtn">Agregar Jugador</button>
 
         <div class="players-title">🏆 ESTADÍSTICAS AVANZADAS - VS CADA RIVAL 🏆</div>
@@ -673,7 +602,7 @@ let pendingMatches = [];
 
 const ADMIN_USERNAME = "luislithgow1";
 const ADMIN_PASSWORD = "Sdo2007061001$";
-const CODE_EXPIRY_MINUTES = 5;
+const CODE_EXPIRY_MINUTES = 5; // 5 minutos de expiración
 
 function showToast(message, type) {
     const toast = document.createElement('div');
@@ -684,6 +613,7 @@ function showToast(message, type) {
 }
 function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
 
+// ============ ADMIN FUNCTIONS ============
 async function loadAdminData() {
     if (!currentUser?.isAdmin) return;
     const snapshot = await get(usersRef);
@@ -711,6 +641,7 @@ async function loadAdminData() {
     document.querySelectorAll('.delete-user-btn').forEach(btn => btn.onclick = () => remove(ref(database, `users/${btn.dataset.id}`)).then(() => { showToast("Eliminado", "success"); loadAdminData(); }));
 }
 
+// Admin: mostrar códigos activos y permitir eliminarlos
 function updateAdminCodesList() {
     const container = document.getElementById("adminCodesList");
     if (!container || !currentUser?.isAdmin) return;
@@ -720,23 +651,36 @@ function updateAdminCodesList() {
         container.innerHTML = "<p style='color:#aaa; text-align:center;'>✅ No hay códigos activos</p>";
         return;
     }
-    for (let match of pendingMatches) {
+    for (let key in pendingMatches) {
+        const match = pendingMatches[key];
         if (!match.used && match.id) {
             const timeLeft = getTimeLeft(match.createdAt);
-            container.innerHTML += `<div class="pending-code-item"><div><strong>🔑 ${match.code}</strong><br><span style="font-size:10px;">${match.winner} vs ${match.loser}</span><br><span style="font-size:9px; color:#aaa;">Expira: ${timeLeft}</span></div><button class="delete-code-btn" data-id="${match.id}">🗑️</button></div>`;
+            container.innerHTML += `
+                <div class="pending-code-item">
+                    <div>
+                        <strong>🔑 ${match.code}</strong><br>
+                        <span style="font-size:11px;">${match.winner} vs ${match.loser}</span><br>
+                        <span style="font-size:10px; color:#aaa;">Expira: ${timeLeft}</span>
+                    </div>
+                    <button class="delete-code-btn" data-id="${match.id}">🗑️ Eliminar</button>
+                </div>
+            `;
         }
     }
-    document.querySelectorAll('.delete-code-btn').forEach(btn => btn.onclick = () => deleteCodeManually(btn.dataset.id));
+    document.querySelectorAll('.delete-code-btn').forEach(btn => {
+        btn.onclick = () => deleteCodeManually(btn.dataset.id);
+    });
 }
 
 async function deleteCodeManually(codeId) {
     if (!currentUser?.isAdmin) return;
-    if (confirm("¿Eliminar este código?")) {
+    if (confirm("¿Eliminar este código activo?")) {
         await remove(ref(database, `pendingMatches/${codeId}`));
         showToast("✅ Código eliminado", "success");
     }
 }
 
+// ============ LOGIN/REGISTER ============
 async function register() {
     const username = document.getElementById("regUsername").value.trim();
     const pwd = document.getElementById("regPassword").value;
@@ -785,6 +729,7 @@ function logout() { currentUser = null; localStorage.removeItem("nba2k_currentUs
 function showRegister() { document.getElementById("loginSection").style.display = "none"; document.getElementById("registerSection").style.display = "block"; }
 function showLogin() { document.getElementById("registerSection").style.display = "none"; document.getElementById("loginSection").style.display = "block"; }
 
+// ============ SISTEMA DE CÓDIGOS ============
 function getTimeLeft(createdAt) {
     if (!createdAt) return "N/A";
     const created = new Date(createdAt);
@@ -796,6 +741,7 @@ function getTimeLeft(createdAt) {
     return `${minutes}m ${seconds}s`;
 }
 
+// Función para eliminar códigos expirados automáticamente
 async function autoDeleteExpiredCodes() {
     const now = new Date();
     for (const match of pendingMatches) {
@@ -805,6 +751,7 @@ async function autoDeleteExpiredCodes() {
             const expiryTime = created.getTime() + CODE_EXPIRY_MINUTES * 60 * 1000;
             if (now.getTime() > expiryTime && match.id) {
                 await remove(ref(database, `pendingMatches/${match.id}`));
+                console.log(`Código ${match.code} eliminado automáticamente por expiración (${CODE_EXPIRY_MINUTES} min)`);
             }
         }
     }
@@ -854,7 +801,7 @@ function updatePendingMatchesList() {
     if (activeMatches.length === 0) { container.innerHTML = "<p>✅ Sin códigos activos</p>"; return; }
     activeMatches.forEach(m => {
         const timeLeft = getTimeLeft(m.createdAt);
-        container.innerHTML += `<div class="pending-match"><div><strong>🔑 ${m.code}</strong><br>${m.winner} vs ${m.loser}<br><span style="font-size:10px;">⏳ ${timeLeft}</span></div></div>`;
+        container.innerHTML += `<div class="pending-match"><div><strong>🔑 ${m.code}</strong><br>${m.winner} vs ${m.loser}<br><span style="font-size:11px;">⏳ ${timeLeft}</span></div></div>`;
     });
 }
 
@@ -868,12 +815,16 @@ function addPlayer() {
     document.getElementById("playerImageUrl").value = "";
 }
 
+// Estadísticas avanzadas
 function calculateHeadToHead(player, allPlayers, allMatches) {
     const results = [];
     for (const opponent of allPlayers) {
         if (opponent.name === player.name) continue;
         let wins = 0, losses = 0, totalPointsDiff = 0;
-        const matchesVs = allMatches.filter(m => (m.p1 === player.name && m.p2 === opponent.name) || (m.p1 === opponent.name && m.p2 === player.name));
+        const matchesVs = allMatches.filter(m => 
+            (m.p1 === player.name && m.p2 === opponent.name) || 
+            (m.p1 === opponent.name && m.p2 === player.name)
+        );
         for (const m of matchesVs) {
             const isPlayerWinner = (m.p1 === player.name && m.s1 > m.s2) || (m.p2 === player.name && m.s2 > m.s1);
             if (isPlayerWinner) wins++;
@@ -889,6 +840,7 @@ function calculateHeadToHead(player, allPlayers, allMatches) {
     return results.sort((a,b) => b.prob - a.prob);
 }
 
+// Actualizar UI con imágenes como fondo de tarjeta
 function updateUI() {
     const cards = document.getElementById("cards");
     const loserSelect = document.getElementById("loserPlayer");
@@ -934,12 +886,12 @@ function updateUI() {
             
             let vsHtml = "";
             if (h2hStats.length === 0) {
-                vsHtml = `<div class="empty-vs">📭 Sin enfrentamientos</div>`;
+                vsHtml = `<div class="empty-vs">📭 Sin enfrentamientos registrados</div>`;
             } else {
                 vsHtml = `<div class="vs-header-row"><span>RIVAL</span><span>RÉCORD</span><span>PROB.</span><span>DIF</span></div>`;
                 for (const vs of h2hStats) {
                     const probClass = vs.prob >= 60 ? 'prob-high' : (vs.prob >= 40 ? 'prob-mid' : 'prob-low');
-                    vsHtml += `<div class="vs-row"><span class="vs-opponent" title="${escapeHtml(vs.opponentName)}">${escapeHtml(vs.opponentName)}</span><span class="vs-record">${vs.wins}-${vs.losses}</span><span class="vs-prob ${probClass}">${vs.prob.toFixed(0)}%</span><span class="vs-diff ${vs.diff > 0 ? 'green' : (vs.diff < 0 ? 'red' : 'yellow')}">${vs.diff > 0 ? '+' : ''}${vs.diff}</span></div>`;
+                    vsHtml += `<div class="vs-row"><span class="vs-opponent" title="${escapeHtml(vs.opponentName)}">${escapeHtml(vs.opponentName)}</span><span class="vs-record">${vs.wins}-${vs.losses}</span><span class="vs-prob ${probClass}">${vs.prob.toFixed(1)}%</span><span class="vs-diff ${vs.diff > 0 ? 'green' : (vs.diff < 0 ? 'red' : 'yellow')}">${vs.diff > 0 ? '+' : ''}${vs.diff}</span></div>`;
                 }
             }
             
@@ -949,18 +901,18 @@ function updateUI() {
                     <div class="card-overlay">
                         <h3>${escapeHtml(p.name)}</h3>
                         <div class="stats-grid">
-                            <div class="stat-cell"><div class="stat-label-small">W</div><div class="stat-value-medium wins">${p.wins}</div></div>
-                            <div class="stat-cell"><div class="stat-label-small">L</div><div class="stat-value-medium losses">${p.losses}</div></div>
-                            <div class="stat-cell"><div class="stat-label-small">%</div><div class="stat-value-medium percentage">${globalPct}%</div></div>
-                            <div class="stat-cell"><div class="stat-label-small">PTS</div><div class="stat-value-medium points">${p.points}</div></div>
-                            <div class="stat-cell"><div class="stat-label-small">RACHA</div><div class="stat-value-medium streak">${streakIcon}</div></div>
-                            <div class="stat-cell"><div class="stat-label-small">DIF</div><div class="stat-value-medium ${diffColor}">${p.totalDiff > 0 ? '+' : ''}${p.totalDiff}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">✅ VICTORIAS</div><div class="stat-value-medium wins">${p.wins}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">❌ DERROTAS</div><div class="stat-value-medium losses">${p.losses}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">📊 % GLOBAL</div><div class="stat-value-medium percentage">${globalPct}%</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">🌟 PUNTOS</div><div class="stat-value-medium points">${p.points}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">⚡ RACHA</div><div class="stat-value-medium streak">${streakIcon}</div></div>
+                            <div class="stat-cell"><div class="stat-label-small">📊 DIF TOTAL</div><div class="stat-value-medium ${diffColor}">${p.totalDiff > 0 ? '+' : ''}${p.totalDiff}</div></div>
                         </div>
                         <div class="vs-section">
-                            <div class="vs-title">🎯 VS RIVAL</div>
+                            <div class="vs-title">🎯 VS CADA RIVAL</div>
                             <div class="vs-container">${vsHtml}</div>
                         </div>
-                        <div class="total-row"><span class="total-label">🏆 TOTAL</span><span class="total-value">${total}</span></div>
+                        <div class="total-row"><span class="total-label">🏆 PARTIDOS TOTALES</span><span class="total-value">${total}</span></div>
                     </div>
                 </div>
             `;
@@ -968,8 +920,12 @@ function updateUI() {
     }
 }
 
-setInterval(async () => { await autoDeleteExpiredCodes(); }, 30000);
+// Configurar intervalo de eliminación automática cada 30 segundos
+setInterval(async () => {
+    await autoDeleteExpiredCodes();
+}, 30000);
 
+// Event listeners
 document.getElementById("loginBtn")?.addEventListener("click", login);
 document.getElementById("showRegisterBtn")?.addEventListener("click", showRegister);
 document.getElementById("registerBtn")?.addEventListener("click", register);
@@ -981,6 +937,7 @@ document.getElementById("generateLoserCodeBtn")?.addEventListener("click", gener
 document.getElementById("registerWinBtn")?.addEventListener("click", registerWinWithCode);
 document.getElementById("addPlayerBtn")?.addEventListener("click", addPlayer);
 
+// Firebase listeners
 onValue(playersRef, (s) => { players = s.val() ? Object.values(s.val()) : []; updateUI(); });
 onValue(matchesRef, (s) => { matches = s.val() ? Object.values(s.val()) : []; updateUI(); });
 onValue(pendingMatchesRef, (s) => { 
@@ -990,6 +947,7 @@ onValue(pendingMatchesRef, (s) => {
     if (currentUser?.isAdmin) updateAdminCodesList();
 });
 
+// Restaurar sesión
 const savedUser = localStorage.getItem("nba2k_currentUser");
 if (savedUser) {
     try { 
@@ -1005,7 +963,7 @@ if (savedUser) {
     } catch(e) {}
 }
 
-console.log("✅ Sistema responsivo: 3 tarjetas por fila en móvil");
+console.log("✅ Sistema actualizado: expiración en 5 min, admin puede eliminar códigos, imágenes como fondo");
 </script>
 </body>
 </html>
